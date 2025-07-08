@@ -229,3 +229,4 @@ C:\Users\sude.cinar\myblog\obj\Debug\net9.0\compressed\zuglz7s6g5-zebz09mkbr.gz
 C:\Users\sude.cinar\myblog\obj\Debug\net9.0\compressed\5rp1utwu2z-okeuyqzcku.gz
 C:\Users\sude.cinar\myblog\obj\Debug\net9.0\compressed\rqms2811r4-ctowufxi74.gz
 C:\Users\sude.cinar\myblog\obj\Debug\net9.0\compressed\tlfux25dui-ctowufxi74.gz
+C:\Users\sude.cinar\myblog\obj\Debug\net9.0\myblog.sourcelink.json
