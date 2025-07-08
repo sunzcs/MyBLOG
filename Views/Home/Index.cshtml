@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "_Layout";
+
+}
+
+@section Scripts {
+    <script>
+        // Sayfa yüklendiğinde çalışacak kodlar
+        document.addEventListener('DOMContentLoaded', function() {
+            // AOS Animasyon başlatma
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // Typed.js başlatma
+            if (document.querySelector('.typed')) {
+                var typed = new Typed('.typed', {
+                    strings: document.querySelector('.typed').getAttribute('data-typed-items').split(','),
+                    typeSpeed: 100,
+                    backSpeed: 50,
+                    loop: true
+                });
+            }
+        });
+    </script>
+
+
+    <!-- Typed.js Initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.querySelector('.typed')) {
+                var typed = new Typed('.typed', {
+                    strings: $('.typed').attr('data-typed-items').split(','),
+                    typeSpeed: 100,
+                    backSpeed: 50,
+                    loop: true
+                });
+            }
+        });
+    </script>
+}
