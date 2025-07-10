@@ -1,4 +1,4 @@
-namespace myblog.Data
+namespace myblog.Models
 {
     public class Skills
     {

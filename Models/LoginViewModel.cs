@@ -1,4 +1,4 @@
-namespace YourProject.Models
+namespace myblog.Models
 {
     public class LoginViewModel
     {

@@ -17,7 +17,7 @@ namespace myblog.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -44,7 +44,7 @@ namespace myblog.Migrations
 
                     b.HasKey("EducationId");
 
-                    b.ToTable("Educations");
+                    b.ToTable("Educations", (string)null);
                 });
 
             modelBuilder.Entity("myblog.Data.Lang", b =>
@@ -63,7 +63,7 @@ namespace myblog.Migrations
 
                     b.HasKey("LangId");
 
-                    b.ToTable("Lang");
+                    b.ToTable("Lang", (string)null);
                 });
 
             modelBuilder.Entity("myblog.Data.SLang", b =>
@@ -82,7 +82,7 @@ namespace myblog.Migrations
 
                     b.HasKey("SlangId");
 
-                    b.ToTable("SLang");
+                    b.ToTable("SLang", (string)null);
                 });
 
             modelBuilder.Entity("myblog.Data.Skills", b =>
@@ -98,7 +98,7 @@ namespace myblog.Migrations
 
                     b.HasKey("SkillsId");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
                 });
 
             modelBuilder.Entity("myblog.Data.User", b =>
@@ -126,7 +126,7 @@ namespace myblog.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

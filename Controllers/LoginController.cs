@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using YourProject.Models;
+using myblog.Models;
 
-namespace YourProject.Controllers
+namespace myblog.Controllers
 {
     public class LoginController : Controller
     {
