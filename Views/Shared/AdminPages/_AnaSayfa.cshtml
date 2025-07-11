@@ -1,5 +1,5 @@
 @using myblog.Models
-@model List<myblog.Models.ViewModel.ViewModel>
+@model myblog.Models.ViewModel.ViewModel
 
 <!DOCTYPE html>
 <html lang="tr">
@@ -89,10 +89,10 @@ e default
       <tr>
         <th>Ana Sayfa</th>
       </tr>
-    @foreach (var viewModel in Model)
+    @foreach (var Me in Model.Me)
     {
        <tr>
-    <td>@User.Identity.Name</td>
+    <td>@Me.Name</td>
     <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
     </tr>
     }

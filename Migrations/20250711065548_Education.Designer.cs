@@ -12,20 +12,20 @@ using myblog.Data;
 namespace myblog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250708114649_User")]
-    partial class User
+    [Migration("20250711065548_Education")]
+    partial class Education
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("myblog.Data.Education", b =>
+            modelBuilder.Entity("myblog.Models.Education", b =>
                 {
                     b.Property<int>("EducationId")
                         .ValueGeneratedOnAdd()
@@ -47,10 +47,10 @@ namespace myblog.Migrations
 
                     b.HasKey("EducationId");
 
-                    b.ToTable("Educations");
+                    b.ToTable("Education");
                 });
 
-            modelBuilder.Entity("myblog.Data.Lang", b =>
+            modelBuilder.Entity("myblog.Models.Lang", b =>
                 {
                     b.Property<int>("LangId")
                         .ValueGeneratedOnAdd()
@@ -69,48 +69,16 @@ namespace myblog.Migrations
                     b.ToTable("Lang");
                 });
 
-            modelBuilder.Entity("myblog.Data.SLang", b =>
-                {
-                    b.Property<int>("SlangId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SlangId"));
-
-                    b.Property<string>("SlangLevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SlangName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SlangId");
-
-                    b.ToTable("SLang");
-                });
-
-            modelBuilder.Entity("myblog.Data.Skills", b =>
-                {
-                    b.Property<int>("SkillsId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillsId"));
-
-                    b.Property<string>("SkillName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SkillsId");
-
-                    b.ToTable("Skills");
-                });
-
-            modelBuilder.Entity("myblog.Data.User", b =>
+            modelBuilder.Entity("myblog.Models.Me", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
@@ -129,7 +97,42 @@ namespace myblog.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Me");
+                });
+
+            modelBuilder.Entity("myblog.Models.SLang", b =>
+                {
+                    b.Property<int>("SlangId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SlangId"));
+
+                    b.Property<string>("SlangLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SlangName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SlangId");
+
+                    b.ToTable("SLang");
+                });
+
+            modelBuilder.Entity("myblog.Models.Skills", b =>
+                {
+                    b.Property<int>("SkillsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillsId"));
+
+                    b.Property<string>("SkillName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SkillsId");
+
+                    b.ToTable("Skills");
                 });
 #pragma warning restore 612, 618
         }
