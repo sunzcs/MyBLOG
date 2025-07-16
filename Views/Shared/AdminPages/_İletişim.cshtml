@@ -1,3 +1,6 @@
+@using myblog.Models
+@model myblog.Models.ViewModel.ViewModel
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -78,38 +81,29 @@
     <tr>
         <th>İletişim</th>
     </tr>
-    <tr>
-        <td> İletişim 1.</td>
+    <tbody>
+    @foreach (var viewModel in Model.Me)
+    {
+        <tr>
+        <td>@viewModel.Address</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr>
-        <td>Hiletişim 2/td>
+        </tr>
+    }
+   @foreach (var viewModel in Model.Me)
+    {
+        <tr>
+        <td>@viewModel.Phonenum</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr>
-        <td>Adres</td>
+        </tr>
+    }
+    @foreach (var viewModel in Model.Me)
+    {
+        <tr>
+        <td>@viewModel.Email</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr></tr>
-        <td>Adresbilgileri....</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr>
-        <td>Telefon Numarası</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr></tr>
-        <td>Telefon Numarası.....</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr></tr>
-        <td>Mail</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr></tr>
-        <td>Mailim.....</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
+        </tr>
+    }
+    </tbody>
 </table>
 
 <!-- Modal (arka plan gölgesi olmadan gösterilecek) -->
@@ -133,26 +127,6 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-  const modal = new bootstrap.Modal(document.getElementById('editModal'), { backdrop: false });
-  let currentTd = null;
-
-  document.querySelectorAll('.edit-btn').forEach(button => {
-    button.addEventListener('click', function () {
-      currentTd = this.closest('tr').querySelector('td');
-      document.getElementById('modalTextarea').value = currentTd.textContent.trim();
-      modal.show();
-    });
-  });
-
-  document.getElementById('saveChanges').addEventListener('click', function () {
-    if (currentTd) {
-      currentTd.textContent = document.getElementById('modalTextarea').value.trim();
-      modal.hide();
-    }
-  });
-</script>
 
 </body>
 </html>

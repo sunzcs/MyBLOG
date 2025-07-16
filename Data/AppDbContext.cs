@@ -11,6 +11,10 @@ namespace myblog.Data
         public DbSet<SLang> SLang { get; set; }
         public DbSet<Lang> Lang { get; set; }
         public DbSet<Skills> Skills { get; set; }
+        public DbSet<Text> Text { get; set; }
+
+
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 

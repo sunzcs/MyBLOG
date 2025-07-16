@@ -11,5 +11,9 @@ public class AdminController : Controller
     {
         return View();
     }
+    public IActionResult Login()
+    {
+        return View(); // Views/Admin/Login.cshtml otomatik olarak yüklenir
+    }
    
 }

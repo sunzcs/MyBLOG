@@ -14,7 +14,7 @@ namespace myblog.Controllers
         public IActionResult Login(LoginViewModel model)
         {
             // Basit kontrol - normalde veritabanı ile kontrol edilir
-            if (model.Username == "admin" && model.Password == "admin123")
+            if (model.Username == "admin" && model.Password == "a")
             {
                 return RedirectToAction("Index", "Admin"); // admin paneline yönlendir
             }

@@ -1,8 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using myblog.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+    });
+
 
 // Servisleri ekle
 builder.Services.AddControllersWithViews();

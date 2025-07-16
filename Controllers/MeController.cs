@@ -4,6 +4,7 @@ using myblog.Models;      // Me modelinin namespace'i
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace myblog.Controllers
 {
     public class MeController : Controller
@@ -118,5 +119,34 @@ namespace myblog.Controllers
         {
             return _context.Set<Me>().Any(e => e.Id == id);
         }
+        // POST: Me/UpdateMe
+        [HttpPost]
+        [IgnoreAntiforgeryToken] // AJAX çağrısı için, AntiForgery token kullanmıyorsan
+        public async Task<IActionResult> UpdateMe([FromBody] UpdateRequest request)
+        {
+            if (request == null || string.IsNullOrWhiteSpace(request.NewValue))
+            {
+                return Json(new { success = false, message = "Geçersiz veri." });
+            }
+
+            var meItem = await _context.Me.FindAsync(request.Id);
+            if (meItem == null)
+            {
+                return Json(new { success = false, message = "Kayıt bulunamadı." });
+            }
+
+            meItem.Name = request.NewValue;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Hata: " + ex.Message });
+            }
+        }
+
     }
 }

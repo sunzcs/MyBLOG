@@ -78,29 +78,50 @@
     <tr>
         <th>Hakkımda</th>
     </tr>
+    <tbody>
+    @foreach (var viewModel in Model.Me)
+    {
     <tr>
-        <td>Bu çok uzun bir metin örneğidir. Eğer metin çok uzun olursa tablonun sağa doğru genişlemesini engellemek ve bunun yerine aşağı doğru genişlemesini sağlamak istiyoruz. Bu şekilde tablo daha düzenli görünecektir.</td>
+        <td>@viewModel.Name</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
     </tr>
+    }
+    @foreach (var viewModel in Model.Education)
+    {
     <tr>
-        <td>Hakkımda 2 - Bu da biraz daha uzun bir metin örneği olsun ki nasıl davrandığını görelim. Uzun metinlerde tablo hücrelerinin davranışını test ediyoruz.</td>
+        <td>@viewModel.SCStatement</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
     </tr>
+    }
+     @foreach (var viewModel in Model.Me)
+    {
     <tr>
-        <td>Hakkımda 3</td>
+        <td>@viewModel.Email</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
     </tr>
+    }
+    @foreach (var viewModel in Model.Me)
+    {
     <tr>
-        <td>Hakkımda 4</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    <tr>
-        <td>Hakkımdsfs</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    <tr>
-        <td>Hakkımda 6</td>
+        <td>@viewModel.Phonenum</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
     </tr>
+    }
+    @foreach (var viewModel in Model.Me)
+    {
+    <tr>
+        <td>@viewModel.Address</td>
+        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+    </tr>
+    }
+    @foreach (var viewModel in Model.Text)
+    {
+    <tr>
+        <td>@viewModel.Text2</td>
+        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+    </tr>
+    }
+    </tbody>
 </table>
 
 <!-- Modal (arka plan gölgesi olmadan gösterilecek) -->
@@ -125,25 +146,6 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-  const modal = new bootstrap.Modal(document.getElementById('editModal'), { backdrop: false });
-  let currentTd = null;
-
-  document.querySelectorAll('.edit-btn').forEach(button => {
-    button.addEventListener('click', function () {
-      currentTd = this.closest('tr').querySelector('td');
-      document.getElementById('modalTextarea').value = currentTd.textContent.trim();
-      modal.show();
-    });
-  });
-
-  document.getElementById('saveChanges').addEventListener('click', function () {
-    if (currentTd) {
-      currentTd.textContent = document.getElementById('modalTextarea').value.trim();
-      modal.hide();
-    }
-  });
-</script>
 
 </body>
 </html>

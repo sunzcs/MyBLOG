@@ -13,5 +13,6 @@ namespace myblog.Models.ViewModel
         public List<Skills> Skills { get; set; }
         public List<Lang> Lang { get; set; }
         public List<SLang> SLang { get; set; }
+        public List<Text> Text { get; set; }
     }
 }
