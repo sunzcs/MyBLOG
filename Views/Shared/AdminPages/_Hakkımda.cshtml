@@ -1,246 +1,156 @@
-@model myblog.Models.Me
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hakkımda</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-    /* CSS Stilleri */
-    .modern-tablo {
-        width: 100%;
-        border-collapse: collapse;
-        font-family: Arial, sans-serif;
-        margin: 20px 0;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        table-layout: fixed; /* Tablo genişliğini sabitler */
-    }
-    
-    .modern-tablo th {
-        background-color: #10087f;
-        color: white;
-        padding: 12px;
-        text-align: left;
-        border-bottom: 2px solid #ddd;
-    }
-    
-    .modern-tablo td {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        position: relative; /* Buton pozisyonu için gerekli */
-        word-wrap: break-word; /* Uzun kelimeleri böler */
-        overflow-wrap: break-word; /* Uzun kelimeleri böler */
-        white-space: normal; /* Normal boşluk davranışı */
-    }
-    
-    /* İlk sütun için genişlik ayarı */
-    .modern-tablo td:first-child {
-        width: 70%; /* İçerik için daha geniş alan */
-    }
-    
-    /* İkinci sütun için genişlik ayarı */
-    .modern-tablo td:nth-child(2) {
-        width: 30%; /* Buton için daha dar alan */
-    }
-    
-    .modern-tablo tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    
-    .modern-tablo tr:hover {
-        background-color: #e6f7e6;
-    }
-    
-    /* Buton stilleri ve sağa sabitleme */
-    .btn-primary {
-        background-color: #10087f;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        cursor: pointer;
-        text-decoration: none;
-        position: absolute; /* Mutlak pozisyon */
-        right: 10px; /* Sağdan 10px boşluk */
-        top: 50%; /* Dikeyde ortala */
-        transform: translateY(-50%); /* Tam ortalamak için */
-    }
-    
-    .btn-primary:hover {
-        background-color: #0d6bcd;
-    }
-    .modal-backdrop {
-            display: none !important;
-        }
-        
-        /* Modal arka planını şeffaf yap */
-        .modal {
-            background-color: transparent;
-        }
-    </style>
-</head>
+@model myblog.Models.Education
+
+@{
+    ViewBag.Title = "Hakkımda";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<title>Hakkımda</title>
+
+ <style>
+            table {
+                width: 50%;
+                border-collapse: collapse;
+                margin-bottom: 10px;
+            }
+            th, td {
+                border: 1px solid #444;
+                padding: 8px;
+                text-align: left;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                background-color: #007bff;
+                color: white;
+            border-radius: 6px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .modal-backdrop {
+                display: none !important;
+            }
+            
+            /* Modal arka planını şeffaf yap */
+            .modal {
+                background-color: transparent;
+            }
+</style>
+
 <body>
 
-<table class="modern-tablo">
-    <tr>
-        <th>Hakkımda</th>
-    </tr>
-    <tbody>
-    @*foreach (var viewModel in Model.Me)
-    {
-        <tr data-id="@viewModel.Id" data-type="me" data-property="Name">
-            <td>@viewModel.Name</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-    }
-    @foreach (var viewModel in Model.Education)
-    {
-        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCStatement">
-            <td>@viewModel.SCStatement</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCName">
-            <td>@viewModel.SCName</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCStartdate">
-            <td>@viewModel.SCStartdate.ToString("yyyy-MM-dd")</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCFinishdate">
-            <td>@viewModel.SCFinishdate.ToString("yyyy-MM-dd")</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-    }
-    @foreach (var viewModel in Model.Me)
-    {
-        <tr data-id="@viewModel.Id" data-type="me" data-property="Email">
-            <td>@viewModel.Email</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-        <tr data-id="@viewModel.Id" data-type="me" data-property="Phonenum">
-            <td>@viewModel.Phonenum</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-        <tr data-id="@viewModel.Id" data-type="me" data-property="Address">
-            <td>@viewModel.Address</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-    }
-    @foreach (var viewModel in Model.Text)
-    {
-        <tr data-id="@viewModel.TextId" data-type="text" data-property="Text2">
-            <td>@viewModel.Text2</td>
-            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-        </tr>
-    }*@
-</tbody>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>...</th>
+                    <th>DEĞERLER</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                <tr><td>SCName</td><td id="education-SCName">@Model.SCName</td></tr>
+                <tr><td>SCStatement</td><td id="education-SCStatement">@Model.SCStatement</td></tr>
+                <tr><td>SCStartdate</td><td id="education-SCStartdate">@Model.SCStartdate.ToString("yyyy-MM-dd")</td></tr>
+                <tr><td>SCFinishdate</td><td id="education-SCFinishdate">@Model.SCFinishdate.ToString("yyyy-MM-dd")</td></tr>
 
-</table>
 
-<div class="modal fade" id="editModal" tabindex="-1" data-bs-backdrop="false">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Metni Düzenle</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
-      </div>
-      <div class="modal-body">
-        <textarea id="modalTextarea" class="form-control" rows="5"></textarea>
-      </div>
-      <div class="modal-footer" style="position: relative; height: 50px;">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-          style="position: absolute; right: 120px; top: 50%; transform: translateY(-50%);">İptal</button>
-        <button type="button" class="btn btn-primary" id="saveChanges"
-          style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">Kaydet</button>
-      </div>
+
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary edit-btn" id="editBtn">Düzenle</button>
+
+
+                                                @*Düzeltme için modal ksımı*@
+    <div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tüm Bilgileri Düzenle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control mb-2" id="input-SCName" placeholder="SCName">
+                    <input class="form-control mb-2" id="input-SCStatement" placeholder="SCStatement">
+                    <input type="date" class="form-control mb-2" id="input-SCStartdate" placeholder="SCStartdate">
+                    <input type="date" class="form-control mb-2" id="input-SCFinishdate" placeholder="SCFinishdate">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button class="btn btn-primary" id="saveAllChanges">Kaydet</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
+                                        @*Veri tabanına veri yollamak*@
+    <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const editButtons = document.querySelectorAll('.edit-btn');
-    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-    const modalTextarea = document.getElementById('modalTextarea');
-    const saveChangesBtn = document.getElementById('saveChanges');
+    const modal = new bootstrap.Modal(document.getElementById('editModal'));
 
-    let currentItemId = null;
-    let currentItemType = null;
-    let currentRowElement = null;
-    let currentProperty = null;
+    document.getElementById('editBtn').addEventListener('click', () => {
+        // Diğer alanları al
+        document.getElementById('input-SCName').value = document.getElementById('education-SCName').textContent.trim();
+        document.getElementById('input-SCStatement').value = document.getElementById('education-SCStatement').textContent.trim();
 
-    editButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            currentRowElement = this.closest('tr');
-            currentItemId = Number(currentRowElement.dataset.id); // Sayıya çevirdik
-            currentItemType = currentRowElement.dataset.type;
-            currentProperty = currentRowElement.dataset.property;
+        // SCStartdate için güvenli biçimde al
+        let rawStart = document.getElementById('education-SCStartdate').textContent.trim();
+        let parsedStart = new Date(rawStart);
+        let formattedStart = !isNaN(parsedStart) ? parsedStart.toISOString().split('T')[0] : "";
+        document.getElementById('input-SCStartdate').value = formattedStart;
 
-            const currentText = currentRowElement.querySelector('td:first-child').innerText;
-            modalTextarea.value = currentText;
-            editModal.show();
-        });
+        // SCFinishdate için güvenli biçimde al
+        let rawFinish = document.getElementById('education-SCFinishdate').textContent.trim();
+        let parsedFinish = new Date(rawFinish);
+        let formattedFinish = !isNaN(parsedFinish) ? parsedFinish.toISOString().split('T')[0] : "";
+        document.getElementById('input-SCFinishdate').value = formattedFinish;
+
+        // Modalı aç
+        modal.show();
     });
 
-    saveChangesBtn.addEventListener('click', function () {
-        const newText = modalTextarea.value.trim();
+    // Kaydet butonuna tıklandığında veriyi gönder
+    document.getElementById('saveAllChanges').addEventListener('click', () => {
+        const data = {
+            EducationId: 1, // Gerekirse dinamik al (data-id gibi)
+            SCName: document.getElementById('input-SCName').value.trim(),
+            SCStatement: document.getElementById('input-SCStatement').value.trim(),
+            SCStartdate: document.getElementById('input-SCStartdate').value,
+            SCFinishdate: document.getElementById('input-SCFinishdate').value
+        };
 
-        if (!newText) {
-            alert("Boş değer kaydedilemez!");
-            return;
-        }
-
-        fetch(`/${capitalizeFirstLetter(currentItemType)}/Update${capitalizeFirstLetter(currentItemType)}`, {
+        fetch('/Educations/UpdateAll', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: currentItemId,
-                propertyName: currentProperty,
-                newValue: newText
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
         })
+        .then(res => res.json())
         .then(response => {
-            if (!response.ok) throw new Error('Ağ yanıtı başarısız.');
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                if (currentRowElement) {
-                    currentRowElement.querySelector('td:first-child').innerText = newText;
-                }
-                editModal.hide();
-                alert('Veri başarıyla güncellendi!');
-            } else {
-                alert('Veri güncellenirken hata oluştu: ' + data.message);
+            if (!response.success) {
+                alert(response.message || "Hata oluştu.");
+                return;
             }
+
+            // Sayfada bilgileri güncelle
+            document.getElementById('education-SCName').textContent = data.SCName;
+            document.getElementById('education-SCStatement').textContent = data.SCStatement;
+            document.getElementById('education-SCStartdate').textContent = data.SCStartdate;
+            document.getElementById('education-SCFinishdate').textContent = data.SCFinishdate;
+
+            modal.hide();
         })
-        .catch(error => {
-            console.error('Fetch hatası:', error);
-            alert('Veri güncellenirken hata oluştu. Konsolu kontrol edin.');
+        .catch(err => {
+            console.error("Sunucu hatası:", err);
+            alert("Sunucu hatası: " + err.message);
         });
     });
-
-    document.getElementById('editModal').addEventListener('hidden.bs.modal', function () {
-        currentItemId = null;
-        currentItemType = null;
-        currentRowElement = null;
-        currentProperty = null;
-        modalTextarea.value = '';
-    });
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
 });
 </script>
 
-</body>
-</html>
+
+
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>

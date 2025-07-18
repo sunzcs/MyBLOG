@@ -74,40 +74,6 @@ namespace myblog.Controllers
         }
 
         
-        [HttpPost]
-        [Route("Skills/UpdateSkills")] 
-        public async Task<IActionResult> UpdateSkills([FromBody] UpdateRequest request)
-        {
-            if (request == null || request.Id == 0 || string.IsNullOrWhiteSpace(request.PropertyName))
-            {
-                return BadRequest(new { success = false, message = "Geçersiz veri gönderildi." });
-            }
-
-            var skills = await _context.Skills.FindAsync(request.Id);
-            if (skills == null)
-            {
-                return NotFound(new { success = false, message = "Skill bulunamadı." });
-            }
-
-            // Güncellenecek alan
-            switch (request.PropertyName.Trim().ToLower())
-            {
-                case "skillname":
-                    skills.SkillName = request.NewValue;
-                    break;
-                default:
-                    return BadRequest(new { success = false, message = $"'{request.PropertyName}' alanı desteklenmiyor." });
-            }
-
-            try
-            {
-                await _context.SaveChangesAsync();
-                return Ok(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { success = false, message = "Veri güncellenirken hata: " + ex.Message });
-            }
-        }
+       
     }
 }

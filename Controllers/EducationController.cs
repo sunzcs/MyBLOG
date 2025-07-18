@@ -61,50 +61,26 @@ namespace myblog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        
         [HttpPost]
-        [Route("Education/UpdateEducation")]
-        public async Task<IActionResult> UpdateEducation([FromBody] UpdateRequest request)
+        public IActionResult UpdateAll([FromBody] Education updated)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.PropertyName) || string.IsNullOrWhiteSpace(request.NewValue))
-                return Json(new { success = false, message = "Eksik veri." });
-
-            var education = await _context.Education.FindAsync(request.Id);
-            if (education == null)
-                return Json(new { success = false, message = "Kayıt bulunamadı." });
-
-            try
+            if (updated==null)
             {
-                switch (request.PropertyName)
-                {
-                    case "SCName":
-                        education.SCName = request.NewValue;
-                        break;
-                    case "SCStatement":
-                        education.SCStatement = request.NewValue;
-                        break;
-                    case "SCStartdate":
-                        if (DateTime.TryParse(request.NewValue, out var start))
-                            education.SCStartdate = start;
-                        else return Json(new { success = false, message = "Geçersiz tarih." });
-                        break;
-                    case "SCFinishdate":
-                        if (DateTime.TryParse(request.NewValue, out var finish))
-                            education.SCFinishdate = finish;
-                        else return Json(new { success = false, message = "Geçersiz tarih." });
-                        break;
-                    default:
-                        return Json(new { success = false, message = "Tanımsız alan." });
-                }
+                return Json(new { success = false, message = "boş veri." });
+            }
+            var education = _context.Education.FirstOrDefault(x => x.EducationId == updated.EducationId);
+            if (education == null) return Json(new { success = false, message = "Kullanıcı bulunamadı." });
 
-                await _context.SaveChangesAsync();
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "Hata: " + ex.Message });
-            }
+            education.SCName = updated.SCName;
+            education.SCStatement = updated.SCStatement;
+            education.SCStartdate = updated.SCStartdate;
+            education.SCFinishdate = updated.SCFinishdate;
+
+            _context.SaveChanges();
+
+            return Json(new { success = true });
         }
-
+        
     }
 }

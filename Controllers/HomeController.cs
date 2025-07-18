@@ -29,32 +29,27 @@ namespace myblog.Controllers
 
         public IActionResult Hakkımda()
         {
-            var educationList = _context.Education.ToList();
-            return View("~/Views/Shared/AdminPages/_Hakkımda.cshtml", educationList);
+            var education = _context.Education.FirstOrDefault();
+            return View("~/Views/Shared/AdminPages/_Hakkımda.cshtml", education);
         }
 
-        public IActionResult Hakkımda2()
-        {
-            var langList = _context.Lang.ToList();
-            return View("~/Views/Shared/AdminPages/_Hakkımda2.cshtml", langList);
-        }
 
         public IActionResult Becerilerim()
         {
-            var skillsList = _context.Skills.ToList();
-            return View("~/Views/Shared/AdminPages/_Becerilerim.cshtml", skillsList);
+            var skills = _context.Skills.FirstOrDefault();
+            return View("~/Views/Shared/AdminPages/_Becerilerim.cshtml", skills);
         }
 
         public IActionResult Projelerim()
         {
-            var textList = _context.Text.ToList();
-            return View("~/Views/Shared/AdminPages/_Projelerim.cshtml", textList);
+            var text = _context.Text.FirstOrDefault();
+            return View("~/Views/Shared/AdminPages/_Projelerim.cshtml", text);
         }
 
         public IActionResult İletişim()
         {
-            var slangList = _context.SLang.ToList();
-            return View("~/Views/Shared/AdminPages/_İletişim.cshtml", slangList);
+            var slang = _context.SLang.FirstOrDefault();
+            return View("~/Views/Shared/AdminPages/_İletişim.cshtml", slang);
         }
 
         public IActionResult Privacy()

@@ -119,45 +119,6 @@ namespace myblog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
-        [Route("Text/UpdateText")]
-        public async Task<IActionResult> UpdateText([FromBody] UpdateRequest request)
-        {
-            if (request == null || request.Id == 0 || string.IsNullOrWhiteSpace(request.PropertyName))
-            {
-                return Json(new { success = false, message = "Geçersiz veri gönderildi." });
-            }
-
-            var text = await _context.Text.FindAsync(request.Id);
-            if (text == null)
-            {
-                return Json(new { success = false, message = "Kayıt bulunamadı." });
-            }
-
-            switch (request.PropertyName.Trim().ToLower())
-            {
-                case "text1":
-                    text.Text1 = request.NewValue;
-                    break;
-                case "text2":
-                    text.Text2 = request.NewValue;
-                    break;
-                case "text3":
-                    text.Text3 = request.NewValue;
-                    break;
-                default:
-                    return Json(new { success = false, message = $"'{request.PropertyName}' alanı desteklenmiyor." });
-            }
-
-            try
-            {
-                await _context.SaveChangesAsync();
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = $"Hata: {ex.Message}" });
-            }
-        }
+        
     }
 }
