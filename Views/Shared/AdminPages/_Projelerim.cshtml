@@ -1,6 +1,5 @@
-@using myblog.Models
-@model myblog.Models.ViewModel.ViewModel
 
+@model myblog.Models.Me
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -73,6 +72,14 @@
     .btn-primary:hover {
         background-color: #0d6bcd;
     }
+    .modal-backdrop {
+            display: none !important;
+        }
+        
+        /* Modal arka planını şeffaf yap */
+        .modal {
+            background-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -82,7 +89,7 @@
         <th>Projelerim</th>
     </tr>
     <tbody>
-    @foreach (var viewModel in Model.Text)
+    @*foreach (var viewModel in Model.Text)
     {
         <tr>
         <td>@viewModel.Text3</td>
@@ -127,13 +134,14 @@
      <tr></tr>
         <td>Hakkımda 10</td>
         <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>s
+    </tr>*@
     </tbody>
 </table>
 
 
-<div class="modal fade" id="editModal" tabindex="-1" data-bs-backdrop="false">
-  <div class="modal-dialog modal-dialog-centered"> 
+<!-- Modal -->
+<div class="modal" id="editModal" tabindex="-1" data-bs-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Metni Düzenle</h5>
@@ -141,14 +149,17 @@
       </div>
       <div class="modal-body">
         <textarea id="modalTextarea" class="form-control" rows="5"></textarea>
+      </div>
       <div class="modal-footer" style="position: relative; height: 50px;">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="position: absolute; right: 120px; top: 50%; transform: translateY(-50%);">İptal</button> 
-        <button type="button" class="btn btn-primary" id="saveChanges" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">Kaydet</button>
-    </div>
-
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                style="position: absolute; right: 120px; top: 50%; transform: translateY(-50%);">İptal</button>
+        <button type="button" class="btn btn-primary" id="saveChanges"
+                style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">Kaydet</button>
+      </div>
     </div>
   </div>
 </div>
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

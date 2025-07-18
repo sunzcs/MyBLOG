@@ -1,3 +1,4 @@
+@model myblog.Models.Me
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -70,6 +71,14 @@
     .btn-primary:hover {
         background-color: #0d6bcd;
     }
+    .modal-backdrop {
+            display: none !important;
+        }
+        
+        /* Modal arka planını şeffaf yap */
+        .modal {
+            background-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -79,54 +88,60 @@
         <th>Hakkımda</th>
     </tr>
     <tbody>
-    @foreach (var viewModel in Model.Me)
+    @*foreach (var viewModel in Model.Me)
     {
-    <tr>
-        <td>@viewModel.Name</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
+        <tr data-id="@viewModel.Id" data-type="me" data-property="Name">
+            <td>@viewModel.Name</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
     }
     @foreach (var viewModel in Model.Education)
     {
-    <tr>
-        <td>@viewModel.SCStatement</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    }
-     @foreach (var viewModel in Model.Me)
-    {
-    <tr>
-        <td>@viewModel.Email</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    }
-    @foreach (var viewModel in Model.Me)
-    {
-    <tr>
-        <td>@viewModel.Phonenum</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
+        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCStatement">
+            <td>@viewModel.SCStatement</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
+        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCName">
+            <td>@viewModel.SCName</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
+        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCStartdate">
+            <td>@viewModel.SCStartdate.ToString("yyyy-MM-dd")</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
+        <tr data-id="@viewModel.EducationId" data-type="education" data-property="SCFinishdate">
+            <td>@viewModel.SCFinishdate.ToString("yyyy-MM-dd")</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
     }
     @foreach (var viewModel in Model.Me)
     {
-    <tr>
-        <td>@viewModel.Address</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
+        <tr data-id="@viewModel.Id" data-type="me" data-property="Email">
+            <td>@viewModel.Email</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
+        <tr data-id="@viewModel.Id" data-type="me" data-property="Phonenum">
+            <td>@viewModel.Phonenum</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
+        <tr data-id="@viewModel.Id" data-type="me" data-property="Address">
+            <td>@viewModel.Address</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
     }
     @foreach (var viewModel in Model.Text)
     {
-    <tr>
-        <td>@viewModel.Text2</td>
-        <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-    </tr>
-    }
-    </tbody>
+        <tr data-id="@viewModel.TextId" data-type="text" data-property="Text2">
+            <td>@viewModel.Text2</td>
+            <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
+        </tr>
+    }*@
+</tbody>
+
 </table>
 
-<!-- Modal (arka plan gölgesi olmadan gösterilecek) -->
 <div class="modal fade" id="editModal" tabindex="-1" data-bs-backdrop="false">
-  <div class="modal-dialog modal-dialog-centered"> <!-- modal-dialog-centered: Dikey ortalama -->
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Metni Düzenle</h5>
@@ -134,11 +149,13 @@
       </div>
       <div class="modal-body">
         <textarea id="modalTextarea" class="form-control" rows="5"></textarea>
+      </div>
       <div class="modal-footer" style="position: relative; height: 50px;">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="position: absolute; right: 120px; top: 50%; transform: translateY(-50%);">İptal</button> 
-        <button type="button" class="btn btn-primary" id="saveChanges" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">Kaydet</button>
-    </div>
-
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          style="position: absolute; right: 120px; top: 50%; transform: translateY(-50%);">İptal</button>
+        <button type="button" class="btn btn-primary" id="saveChanges"
+          style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">Kaydet</button>
+      </div>
     </div>
   </div>
 </div>
@@ -146,6 +163,84 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.edit-btn');
+    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+    const modalTextarea = document.getElementById('modalTextarea');
+    const saveChangesBtn = document.getElementById('saveChanges');
+
+    let currentItemId = null;
+    let currentItemType = null;
+    let currentRowElement = null;
+    let currentProperty = null;
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            currentRowElement = this.closest('tr');
+            currentItemId = Number(currentRowElement.dataset.id); // Sayıya çevirdik
+            currentItemType = currentRowElement.dataset.type;
+            currentProperty = currentRowElement.dataset.property;
+
+            const currentText = currentRowElement.querySelector('td:first-child').innerText;
+            modalTextarea.value = currentText;
+            editModal.show();
+        });
+    });
+
+    saveChangesBtn.addEventListener('click', function () {
+        const newText = modalTextarea.value.trim();
+
+        if (!newText) {
+            alert("Boş değer kaydedilemez!");
+            return;
+        }
+
+        fetch(`/${capitalizeFirstLetter(currentItemType)}/Update${capitalizeFirstLetter(currentItemType)}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: currentItemId,
+                propertyName: currentProperty,
+                newValue: newText
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Ağ yanıtı başarısız.');
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                if (currentRowElement) {
+                    currentRowElement.querySelector('td:first-child').innerText = newText;
+                }
+                editModal.hide();
+                alert('Veri başarıyla güncellendi!');
+            } else {
+                alert('Veri güncellenirken hata oluştu: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch hatası:', error);
+            alert('Veri güncellenirken hata oluştu. Konsolu kontrol edin.');
+        });
+    });
+
+    document.getElementById('editModal').addEventListener('hidden.bs.modal', function () {
+        currentItemId = null;
+        currentItemType = null;
+        currentRowElement = null;
+        currentProperty = null;
+        modalTextarea.value = '';
+    });
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+});
+</script>
 
 </body>
 </html>

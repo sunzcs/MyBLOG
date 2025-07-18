@@ -1,8 +1,7 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using myblog.Models;
-using myblog.Models.ViewModel;
 using myblog.Data;
+using System.Diagnostics;
 
 namespace myblog.Controllers
 {
@@ -22,87 +21,40 @@ namespace myblog.Controllers
             return View();
         }
 
-        public IActionResult Hakkımda()
-        {
-            var model = new ViewModel
-            {
-                Me = _context.Me.ToList(),
-                Education = _context.Education.ToList(),
-                Skills = _context.Skills.ToList(),
-                Lang = _context.Lang.ToList(),
-                SLang = _context.SLang.ToList(),
-                Text = _context.Text.ToList() 
-            };
-            return View("~/Views/Shared/AdminPages/_Hakkımda.cshtml", model);
-        }
         public IActionResult AnaSayfa()
         {
-            var model = new ViewModel
-            {
-                Me = _context.Me.ToList(),
-                Education = _context.Education.ToList(),
-                Skills = _context.Skills.ToList(),
-                Lang = _context.Lang.ToList(),
-                SLang = _context.SLang.ToList(),
-                Text = _context.Text.ToList() 
-            };
-            return View("~/Views/Shared/AdminPages/_AnaSayfa.cshtml", model);
+            var me = _context.Me.FirstOrDefault(); // Liste değil, tek kişi
+            return View("~/Views/Shared/AdminPages/_AnaSayfa.cshtml", me);
+        }
+
+        public IActionResult Hakkımda()
+        {
+            var educationList = _context.Education.ToList();
+            return View("~/Views/Shared/AdminPages/_Hakkımda.cshtml", educationList);
         }
 
         public IActionResult Hakkımda2()
         {
-            var model = new ViewModel
-            {
-                Me = _context.Me.ToList(),
-                Education = _context.Education.ToList(),
-                Skills = _context.Skills.ToList(),
-                Lang = _context.Lang.ToList(),
-                SLang = _context.SLang.ToList(),
-                Text = _context.Text.ToList()
-            };
-            return View("~/Views/Shared/AdminPages/_Hakkımda2.cshtml", model);
+            var langList = _context.Lang.ToList();
+            return View("~/Views/Shared/AdminPages/_Hakkımda2.cshtml", langList);
         }
 
         public IActionResult Becerilerim()
         {
-            var model = new ViewModel
-            {
-                Me = _context.Me.ToList(),
-                Education = _context.Education.ToList(),
-                Skills = _context.Skills.ToList(),
-                Lang = _context.Lang.ToList(),
-                SLang = _context.SLang.ToList(),
-                Text = _context.Text.ToList()
-            };
-            return View("~/Views/Shared/AdminPages/_Becerilerim.cshtml", model);
+            var skillsList = _context.Skills.ToList();
+            return View("~/Views/Shared/AdminPages/_Becerilerim.cshtml", skillsList);
         }
 
         public IActionResult Projelerim()
         {
-            var model = new ViewModel
-            {
-                Me = _context.Me.ToList(),
-                Education = _context.Education.ToList(),
-                Skills = _context.Skills.ToList(),
-                Lang = _context.Lang.ToList(),
-                SLang = _context.SLang.ToList(),
-                Text = _context.Text.ToList()
-            };
-            return View("~/Views/Shared/AdminPages/_Projelerim.cshtml", model);
+            var textList = _context.Text.ToList();
+            return View("~/Views/Shared/AdminPages/_Projelerim.cshtml", textList);
         }
 
         public IActionResult İletişim()
         {
-            var model = new ViewModel
-            {
-                Me = _context.Me.ToList(),
-                Education = _context.Education.ToList(),
-                Skills = _context.Skills.ToList(),
-                Lang = _context.Lang.ToList(),
-                SLang = _context.SLang.ToList(),
-                Text = _context.Text.ToList()
-            };
-            return View("~/Views/Shared/AdminPages/_İletişim.cshtml", model);
+            var slangList = _context.SLang.ToList();
+            return View("~/Views/Shared/AdminPages/_İletişim.cshtml", slangList);
         }
 
         public IActionResult Privacy()

@@ -65,7 +65,6 @@ namespace myblog.Controllers
             return View(text);
         }
 
-        // POST: Text/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Text text)
@@ -87,6 +86,12 @@ namespace myblog.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(text);
+        }
+
+        // TextExists metodu ekleniyor
+        private bool TextExists(int id)
+        {
+            return _context.Text.Any(e => e.TextId == id);
         }
 
         // GET: Text/Delete/5
@@ -114,19 +119,35 @@ namespace myblog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // ✅ AJAX güncelleme metodu
         [HttpPost]
-        [IgnoreAntiforgeryToken]
+        [Route("Text/UpdateText")]
         public async Task<IActionResult> UpdateText([FromBody] UpdateRequest request)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.NewValue))
-                return Json(new { success = false, message = "Geçersiz veri." });
+            if (request == null || request.Id == 0 || string.IsNullOrWhiteSpace(request.PropertyName))
+            {
+                return Json(new { success = false, message = "Geçersiz veri gönderildi." });
+            }
 
             var text = await _context.Text.FindAsync(request.Id);
             if (text == null)
+            {
                 return Json(new { success = false, message = "Kayıt bulunamadı." });
+            }
 
-            text.Text1 = request.NewValue;
+            switch (request.PropertyName.Trim().ToLower())
+            {
+                case "text1":
+                    text.Text1 = request.NewValue;
+                    break;
+                case "text2":
+                    text.Text2 = request.NewValue;
+                    break;
+                case "text3":
+                    text.Text3 = request.NewValue;
+                    break;
+                default:
+                    return Json(new { success = false, message = $"'{request.PropertyName}' alanı desteklenmiyor." });
+            }
 
             try
             {
@@ -137,11 +158,6 @@ namespace myblog.Controllers
             {
                 return Json(new { success = false, message = $"Hata: {ex.Message}" });
             }
-        }
-
-        private bool TextExists(int id)
-        {
-            return _context.Text.Any(e => e.TextId == id);
         }
     }
 }

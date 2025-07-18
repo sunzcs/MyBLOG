@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using myblog.Data;        // DbContext'in namespace'i
-using myblog.Models;      // Me modelinin namespace'i
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
+using myblog.Data;
+using myblog.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace myblog.Controllers
 {
@@ -11,37 +11,36 @@ namespace myblog.Controllers
     {
         private readonly AppDbContext _context;
 
-
         public MeController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Me (Listeleme)
+        // GET: Me
         public async Task<IActionResult> Index()
         {
-            var allMe = await _context.Set<Me>().ToListAsync();
-            return View(allMe);
+            return View(await _context.Me.ToListAsync());
         }
 
-        // GET: Me/Details/5 (Detay)
+        // GET: Me/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
 
-            var me = await _context.Set<Me>().FirstOrDefaultAsync(m => m.Id == id);
+            var me = await _context.Me
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (me == null) return NotFound();
 
             return View(me);
         }
 
-        // GET: Me/Create (Yeni oluşturma formu)
+        // GET: Me/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Me/Create (Yeni kayıt ekleme)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Me me)
@@ -55,18 +54,17 @@ namespace myblog.Controllers
             return View(me);
         }
 
-        // GET: Me/Edit/5 (Düzenleme formu)
+        // GET: Me/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
 
-            var me = await _context.Set<Me>().FindAsync(id);
+            var me = await _context.Me.FindAsync(id);
             if (me == null) return NotFound();
 
             return View(me);
         }
 
-        // POST: Me/Edit/5 (Güncelleme)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Me me)
@@ -82,71 +80,66 @@ namespace myblog.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MeExists(me.Id)) return NotFound();
-                    else throw;
+                    if (!await MeExistsAsync(me.Id)) return NotFound();
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
             return View(me);
         }
 
-        // GET: Me/Delete/5 (Silme onay sayfası)
+        // GET: Me/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
 
-            var me = await _context.Set<Me>().FirstOrDefaultAsync(m => m.Id == id);
+            var me = await _context.Me
+                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (me == null) return NotFound();
 
             return View(me);
         }
 
-        // POST: Me/Delete/5 (Silme işlemi)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var me = await _context.Set<Me>().FindAsync(id);
+            var me = await _context.Me.FindAsync(id);
             if (me != null)
             {
-                _context.Set<Me>().Remove(me);
+                _context.Me.Remove(me);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
         }
-
-        private bool MeExists(int id)
-        {
-            return _context.Set<Me>().Any(e => e.Id == id);
-        }
-        // POST: Me/UpdateMe
         [HttpPost]
-        [IgnoreAntiforgeryToken] // AJAX çağrısı için, AntiForgery token kullanmıyorsan
-        public async Task<IActionResult> UpdateMe([FromBody] UpdateRequest request)
+        public IActionResult UpdateAll([FromBody] Me updated)
         {
-            if (request == null || string.IsNullOrWhiteSpace(request.NewValue))
+            if (updated==null)
             {
-                return Json(new { success = false, message = "Geçersiz veri." });
+                return Json(new { success = false, message = "boş veri." });
             }
+            var me = _context.Me.FirstOrDefault(x => x.Id == updated.Id);
+            if (me == null) return Json(new { success = false, message = "Kullanıcı bulunamadı." });
 
-            var meItem = await _context.Me.FindAsync(request.Id);
-            if (meItem == null)
-            {
-                return Json(new { success = false, message = "Kayıt bulunamadı." });
-            }
+            me.Name = updated.Name;
+            me.Surname = updated.Surname;
+            me.Email = updated.Email;
+            me.Phonenum = updated.Phonenum;
+            me.Birthday = updated.Birthday;
+            me.Address = updated.Address;
 
-            meItem.Name = request.NewValue;
+            _context.SaveChanges();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-                return Json(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "Hata: " + ex.Message });
-            }
+            return Json(new { success = true });
         }
+
+        private async Task<bool> MeExistsAsync(int id)
+        {
+            return await _context.Me.AnyAsync(e => e.Id == id);
+        }
+
 
     }
 }

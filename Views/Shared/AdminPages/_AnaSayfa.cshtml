@@ -1,212 +1,149 @@
-@using myblog.Models
-@model myblog.Models.ViewModel.ViewModel
-
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Ana Sayfa</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
-    <style>
-        /* CSS kodlarınız burada */
-        .modern-tablo {
-            width: 100%;
-            border-collapse: collapse;
-            font-family: Arial, sans-serif;
-            margin: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            table-layout: fixed;
-        }
-
-        .modern-tablo th {
-            background-color: #10087f;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            border-bottom: 2px solid #ddd;
-        }
-
-        .modern-tablo td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            position: relative;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: normal;
-        }
-
-        .modern-tablo td:first-child {
-            width: 70%;
-        }
-
-        .modern-tablo td:nth-child(2) {
-            width: 30%;
-        }
-
-        .modern-tablo tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .modern-tablo tr:hover {
-            background-color: #e6f7e6;
-        }
-
-        .btn-primary {
-            background-color: #10087f;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .btn-primary:hover {
-            background-color: #0d6bcd;
-        }
-    </style>
-</head>
+@model myblog.Models.Me
+@{
+    ViewBag.Title = "Ana Sayfa";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+        <title>Ana Sayfa</title>
+<style>
+            table {
+                width: 50%;
+                border-collapse: collapse;
+                margin-bottom: 10px;
+            }
+            th, td {
+                border: 1px solid #444;
+                padding: 8px;
+                text-align: left;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                background-color: #007bff;
+                color: white;
+            border-radius: 6px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .modal-backdrop {
+                display: none !important;
+            }
+            
+            /* Modal arka planını şeffaf yap */
+            .modal {
+                background-color: transparent;
+            }
+</style>
 
 <body>
-<table class="modern-tablo">
-    <thead>
-        <tr>
-            <th>Ana Sayfa</th>
-            <th>İşlem</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var meItem in Model.Me)
-        {
-            <tr data-id="@meItem.Id" data-type="me">
-                <td>@meItem.Name</td>
-                <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-            </tr>
-        }
-        @foreach (var textItem in Model.Text)
-        {
-            <tr data-id="@textItem.TextId" data-type="text">
-                <td>@textItem.Text1</td>
-                <td><button type="button" class="btn btn-primary edit-btn">Düzenle</button></td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>...</th>
+                    <th>DEĞERLER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>İsim</td><td id="me-name">@Model.Name</td></tr>
+                <tr><td>Soyisim</td><td id="me-surname">@Model.Surname</td></tr>
+                <tr><td>Email</td><td id="me-email">@Model.Email</td></tr>
+                <tr><td>Telefon</td><td id="me-phonenum">@Model.Phonenum</td></tr>
+                <tr><td>Doğum Günü</td><td id="me-birthday">@Model.Birthday</td></tr>
+                <tr><td>Adres</td><td id="me-address">@Model.Address</td></tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary edit-btn" id="editBtn">Düzenle</button>
 
 
-<div class="modal fade" id="editModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> 
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Metni Düzenle</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
-            </div>
-            <div class="modal-body">
-                <textarea id="modalTextarea" class="form-control" rows="5"></textarea>
-            </div>
-            <div class="modal-footer" style="position: relative; height: 50px;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="position: absolute; right: 120px; top: 50%; transform: translateY(-50%);">İptal</button> 
-                <button type="button" class="btn btn-primary" id="saveChanges" style="position: absolute; right: 30px; top: 50%; transform: translateY(-50%);">Kaydet</button>
+                                                @*Düzeltme için modal ksımı*@
+    <div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tüm Bilgileri Düzenle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control mb-2" id="input-name" placeholder="İsim">
+                    <input class="form-control mb-2" id="input-surname" placeholder="Soyisim">
+                    <input class="form-control mb-2" id="input-email" placeholder="Email">
+                    <input class="form-control mb-2" id="input-phonenum" placeholder="Telefon">
+                    <input type="date" class="form-control mb-2" id="input-birthday" placeholder="Doğum Günü">
+                    <textarea class="form-control" id="input-address" placeholder="Adres"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button class="btn btn-primary" id="saveAllChanges">Kaydet</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
+                                        @*Veri tabanına veri yollamak*@
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const editButtons = document.querySelectorAll('.edit-btn');
-        const editModal = new bootstrap.Modal(document.getElementById('editModal'));
-        const modalTextarea = document.getElementById('modalTextarea');
-        const saveChangesBtn = document.getElementById('saveChanges');
+        const modal = new bootstrap.Modal(document.getElementById('editModal'));
 
-        let currentItemId = null;
-        let currentItemType = null;
-        let currentRowElement = null; // Düzenlenen satırı tutmak için
+        // Modalı aç
+        document.getElementById('editBtn').addEventListener('click', () => {
+            document.getElementById('input-name').value = document.getElementById('me-name').textContent.trim();
+            document.getElementById('input-surname').value = document.getElementById('me-surname').textContent.trim();
+            document.getElementById('input-email').value = document.getElementById('me-email').textContent.trim();
+            document.getElementById('input-phonenum').value = document.getElementById('me-phonenum').textContent.trim();
 
-        editButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                currentRowElement = this.closest('tr'); // Butonun bağlı olduğu satırı al
-                currentItemId = currentRowElement.dataset.id;
-                currentItemType = currentRowElement.dataset.type;
-                const currentText = currentRowElement.querySelector('td:first-child').innerText;
-                
-                modalTextarea.value = currentText;
-                editModal.show();
-            });
+            // Tarihi düzgün formata çevir
+            let rawDate = document.getElementById('me-birthday').textContent.trim();
+            let parsedDate = new Date(rawDate);
+            let formattedDate = parsedDate.toISOString().split('T')[0]; // yyyy-MM-dd
+            document.getElementById('input-birthday').value = formattedDate;
+
+            document.getElementById('input-address').value = document.getElementById('me-address').textContent.trim();
+
+            modal.show();
         });
 
-        saveChangesBtn.addEventListener('click', function () {
-            const newText = modalTextarea.value;
+        // Kaydet butonuna basılınca tüm verileri gönder
+        document.getElementById('saveAllChanges').addEventListener('click', () => {
+            const data = {
+                Id: 1, // ID sabit
+                Name: document.getElementById('input-name').value.trim(),
+                Surname: document.getElementById('input-surname').value.trim(),
+                Email: document.getElementById('input-email').value.trim(),
+                Phonenum: document.getElementById('input-phonenum').value.trim(),
+                Birthday: document.getElementById('input-birthday').value, // zaten yyyy-MM-dd
+                Address: document.getElementById('input-address').value.trim()
+            };
 
-            let updateUrl = '';
-            let payload = {};
-
-            // currentItemType'a göre doğru URL ve payload'u ayarla
-            if (currentItemType === 'me') {
-                updateUrl = '/Me/UpdateMe'; // Me Controller'daki UpdateMe metodunu hedefle
-                payload = { id: currentItemId, newValue: newText };
-            } else if (currentItemType === 'text') {
-                updateUrl = '/Text/UpdateText'; // Text Controller'daki UpdateText metodunu hedefle
-                payload = { id: currentItemId, newValue: newText };
-            } else {
-                alert('Bilinmeyen veri tipi!');
-                return; // Geçersiz tip ise işlemi durdur
-            }
-
-            fetch(updateUrl, {
+            fetch('/Me/UpdateAll', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Eğer AntiForgery Token kullanıyorsanız bu satırı aktif edin ve sayfanıza ekleyin:
-                    // <input type="hidden" name="__RequestVerificationToken" value="@Html.AntiForgeryToken().ToString()" />
-                    // 'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')?.value 
-                },
-                body: JSON.stringify(payload)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
             })
+            .then(res => res.json())
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                if (!response.success) {
+                    alert(response.message || "Bilinmeyen bir hata oluştu.");
+                    return;
                 }
-                return response.json(); // Sunucudan gelen JSON yanıtını bekle
-            })
-            .then(data => {
-                if (data.success) {
-                    // Sayfadaki metni güncelle
-                    if (currentRowElement) {
-                        currentRowElement.querySelector('td:first-child').innerText = newText;
-                    }
-                    editModal.hide(); // Modalı kapat
-                    alert('Veri başarıyla güncellendi!');
-                } else {
-                    alert('Veri güncellenirken bir hata oluştu: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                alert('Veri güncellenirken bir hata oluştu. Detaylar için konsola bakın.');
-            });
-        });
 
-        // Modalı kapatırken verileri sıfırla
-        document.getElementById('editModal').addEventListener('hidden.bs.modal', function () {
-            currentItemId = null;
-            currentItemType = null;
-            currentRowElement = null;
-            modalTextarea.value = '';
+                document.getElementById('me-name').textContent = data.Name;
+                document.getElementById('me-surname').textContent = data.Surname;
+                document.getElementById('me-email').textContent = data.Email;
+                document.getElementById('me-phonenum').textContent = data.Phonenum;
+                document.getElementById('me-birthday').textContent = data.Birthday;
+                document.getElementById('me-address').textContent = data.Address;
+
+                modal.hide();
+            })
+            .catch(err => alert("Sunucu hatası: " + err.message));
         });
     });
 </script>
 
-</body>
-</html>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>

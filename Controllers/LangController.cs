@@ -46,5 +46,44 @@ namespace myblog.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        // ✅ AJAX ile güncelleme (UpdateRequest ile)
+        [HttpPost]
+        [Route("Lang/UpdateLang")] 
+        public async Task<IActionResult> UpdateLang([FromBody] UpdateRequest request)
+        {
+            if (request == null || request.Id == 0 || string.IsNullOrWhiteSpace(request.PropertyName))
+            {
+                return Json(new { success = false, message = "Geçersiz veri gönderildi." });
+            }
+
+            var Lang = await _context.Lang.FindAsync(request.Id);
+            if (Lang == null)
+            {
+                return NotFound(new { success = false, message = "Lang bulunamadı." });
+            }
+
+            switch (request.PropertyName.Trim().ToLower())
+            {
+                case "LangName":
+                    Lang.LangName = request.NewValue;
+                    break;
+                case "Langlevel":
+                    Lang.LangLevel = request.NewValue;
+                    break;
+                default:
+                    return Json(new { success = false, message = $"'{request.PropertyName}' alanı desteklenmiyor." });
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Hata: " + ex.Message });
+            }
+        }
     }
 }
