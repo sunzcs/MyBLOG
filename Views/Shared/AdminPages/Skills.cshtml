@@ -1,0 +1,143 @@
+@model myblog.Models.Skills
+@{
+    ViewBag.Title = "Becerilerim";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <title>Becerilerim</title>
+<style>
+            table {
+                width: 50%;
+                border-collapse: collapse;
+                margin-bottom: 10px;
+            }
+            th, td {
+                border: 1px solid #444;
+                padding: 8px;
+                text-align: left;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                background-color: #007bff;
+                color: white;
+            border-radius: 6px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .modal-backdrop {
+                display: none !important;
+            }
+            
+            /* Modal arka planını şeffaf yap */
+            .modal {
+                background-color: transparent;
+            }
+</style>
+
+<body>
+
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>...</th>
+                    <th>DEĞERLER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Skill</td><td id="Skills-SkillName">@Model.SkillName</td></tr>
+                <tr><td>Skill2</td><td id="Skills-SkillName2">@Model.SkillName2</td></tr>
+                <tr><td>Skill3</td><td id="Skills-SkillName3">@Model.SkillName3</td></tr>
+                <tr><td>Skill4</td><td id="Skills-SkillName4">@Model.SkillName4</td></tr>
+                <tr><td>Skill5</td><td id="Skills-SkillName5">@Model.SkillName5</td></tr>
+                <tr><td>Skill6</td><td id="Skills-SkillName6">@Model.SkillName6</td></tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary edit-btn" id="editBtn">Düzenle</button>
+
+
+                                                @*Düzeltme için modal ksımı*@
+    <div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tüm Bilgileri Düzenle</h5>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control mb-2" id="input-SkillName" placeholder="yetenek 1">
+                    <input class="form-control mb-2" id="input-SkillName2" placeholder="yetenek 2">
+                    <input class="form-control mb-2" id="input-SkillName3" placeholder="yetenek 3">
+                    <input class="form-control mb-2" id="input-SkillName4" placeholder="yetenek 4">
+                    <input class="form-control mb-2" id="input-SkillName5" placeholder="yetenek 5">
+                    <input class="form-control mb-2" id="input-SkillName6" placeholder="yetenek 6">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button class="btn btn-primary" id="saveAllChanges">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                                        @*Veri tabanına veri yollamak*@
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = new bootstrap.Modal(document.getElementById('editModal'));
+
+        // Modalı aç
+        document.getElementById('editBtn').addEventListener('click', () => {
+            document.getElementById('input-SkillName').value = document.getElementById('Skills-SkillName').textContent.trim();
+            document.getElementById('input-SkillName2').value = document.getElementById('Skills-SkillName2').textContent.trim();
+            document.getElementById('input-SkillName3').value = document.getElementById('Skills-SkillName3').textContent.trim();
+            document.getElementById('input-SkillName4').value = document.getElementById('Skills-SkillName4').textContent.trim();
+            document.getElementById('input-SkillName5').value = document.getElementById('Skills-SkillName5').textContent.trim();
+            document.getElementById('input-SkillName6').value = document.getElementById('Skills-SkillName6').textContent.trim();
+
+            modal.show();
+        });
+
+        // Kaydet butonuna basılınca tüm verileri gönder
+        document.getElementById('saveAllChanges').addEventListener('click', () => {
+            const data = {
+                SkillsId: 1, // ID sabit
+                SkillName: document.getElementById('input-SkillName').value.trim(),
+                SkillName2: document.getElementById('input-SkillName2').value.trim(),
+                SkillName3: document.getElementById('input-SkillName3').value.trim(),
+                SkillName4: document.getElementById('input-SkillName4').value.trim(),
+                SkillName5: document.getElementById('input-SkillName5').value.trim(),
+                SkillName6: document.getElementById('input-SkillName6').value.trim()
+            };
+
+            fetch('/Skills/UpdateAll', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (!response.success) {
+                    alert(response.message || "Bilinmeyen bir hata oluştu.");
+                    return;
+                }
+
+                document.getElementById('Skills-SkillName').textContent = data.SkillName;
+                document.getElementById('Skills-SkillName2').textContent = data.SkillName2;
+                document.getElementById('Skills-SkillName3').textContent = data.SkillName3;
+                document.getElementById('Skills-SkillName4').textContent = data.SkillName4;
+                document.getElementById('Skills-SkillName5').textContent = data.SkillName5;
+                document.getElementById('Skills-SkillName6').textContent = data.SkillName6;
+
+                modal.hide();
+            })
+            .catch(err => alert("Sunucu hatası: " + err.message));
+        });
+    });
+</script>
+
+</body>

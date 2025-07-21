@@ -1,435 +1,429 @@
-﻿<!DOCTYPE html>
+﻿
+@model myblog.Models.ViewModel.ViewModel
+
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Myers BLOG</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+  <head>
+      <meta charset="utf-8">
+      <meta content="width=device-width, initial-scale=1.0" name="viewport">
+      <title>Myers BLOG</title>
+      <meta name="description" content="">
+      <meta name="keywords" content="">
 
-  <!-- Favicons -->
-  <link href="@Url.Content("~/img/favicon.png")"" rel="icon">
-  <link href="@Url.Content("~/img/apple-touch-icon.png")"rel="apple-touch-icon">
+      <!-- Favicons -->
+      <link href="@Url.Content("~/img/favicon.png")" rel="icon">
+      <link href="@Url.Content("~/img/apple-touch-icon.png")"rel="apple-touch-icon">
 
-  <!-- Fonts -->
-  <link href="@Url.Content("~/https://fonts.googleapis.com")"" rel="preconnect">
-  <link href="@Url.Content("~/https://fonts.gstatic.com")"" rel="preconnect" crossorigin>
-  <link href="@Url.Content("~/https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap")"" rel="stylesheet">
+      <!-- Fonts -->
+      <link href="@Url.Content("~/https://fonts.googleapis.com")" rel="preconnect">
+      <link href="@Url.Content("~/https://fonts.gstatic.com")" rel="preconnect" crossorigin>
+      <link href="@Url.Content("~/https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap")"" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="@Url.Content("~/vendor/bootstrap/css/bootstrap.min.css")"" rel="stylesheet">
-  <link href="@Url.Content("~/vendor/bootstrap-icons/bootstrap-icons.css")"" rel="stylesheet">
-  <link href="@Url.Content("~/vendor/aos/aos.css")"" rel="stylesheet">
-  <link href="@Url.Content("~/vendor/glightbox/css/glightbox.min.css")"" rel="stylesheet">
-  <link href="@Url.Content("~/vendor/swiper/swiper-bundle.min.css")"" rel="stylesheet">
+      <!-- Vendor CSS Files -->
+      <link href="@Url.Content("~/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+      <link href="@Url.Content("~/vendor/bootstrap-icons/bootstrap-icons.css")" rel="stylesheet">
+      <link href="@Url.Content("~/vendor/aos/aos.css")" rel="stylesheet">
+      <link href="@Url.Content("~/vendor/glightbox/css/glightbox.min.css")" rel="stylesheet">
+      <link href="@Url.Content("~/vendor/swiper/swiper-bundle.min.css")" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="@Url.Content("~/css/main.css")"rel="stylesheet">
+      <!-- Main CSS File -->
+      <link href="@Url.Content("~/css/main.css")"rel="stylesheet">
 
+  </head>
+    <body>
+            <header id="header" class="header dark-background d-flex flex-column justify-content-center">
+              <i class="header-toggle d-xl-none bi bi-list"></i>
+              <div class="header-container d-flex flex-column align-items-start">
+                <nav id="navmenu" class="navmenu">
+                    <ul>
+                      <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i> Ana Sayfa </a></li>
+                      <li><a href="#about"><i class="bi bi-person navicon"></i> Hakkımda </a></li>
+                      <li><a href="#skills"><i class="bi bi-person navicon"></i> Becerilerim </a></li>
+                      <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Projelerim </a></li>
+                      <li><a href="#contact"><i class="bi bi-envelope navicon"></i> İletişim</a></li>
+                    </ul>
+                  </nav>
+                <div class="social-links text-center">
+                  <a href="https://www.instagram.com/cinar.sude/" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+                  <a href="https://github.com/sunzcs" class="github" target="_blank"><i class="bi bi-github"></i></a>
+                  <a href="https://www.linkedin.com/in/sudenaz-çınar-8ab4a8280/" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+            </header>
+            <!-- ADMİN SAYFASI BUTONU -->
+            <button id="goToLoginBtn" style=" background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px); ; border: none; border-radius: 50%; cursor: pointer;position: absolute; top: 30px; left: 15px; z-index: 9999;">
+            <ion-icon name="lock-closed-outline" size="large"></ion-icon></button>
 
-  <!-- =======================================================
-  * Template Name: SnapFolio
-  * Template URL: https://bootstrapmade.com/snapfolio-bootstrap-portfolio-template/
-  * Updated: Jun 13 2025 with Bootstrap v5.3.6
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
-<body>
-    <header id="header" class="header dark-background d-flex flex-column justify-content-center">
-    <i class="header-toggle d-xl-none bi bi-list"></i>
+        <!-- ANA SAYFA SECTİONN -->
 
-    <div class="header-container d-flex flex-column align-items-start">
-    <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i> Ana Sayfa </a></li>
-          <li><a href="#about"><i class="bi bi-person navicon"></i> Hakkımda </a></li>
-          <li><a href="#skills"><i class="bi bi-person navicon"></i> Becerilerim </a></li>
-          <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Projelerim </a></li>
-          <li><a href="#contact"><i class="bi bi-envelope navicon"></i> İletişim</a></li>
-        </ul>
-      </nav>
-  
-     <div class="social-links text-center">
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="githup"><i class="bi bi-github"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-       
-  </header>
-<button id="goToLoginBtn" style=" background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px); ; border: none; border-radius: 50%; cursor: pointer;position: absolute; top: 30px; left: 15px; z-index: 9999;">
-    <ion-icon name="lock-closed-outline" size="large"></ion-icon></button>
-
-<section id="hero" class="hero section">      
-
-      <div class="background-elements">
-        <div class="bg-circle circle-1"></div>
-        <div class="bg-circle circle-2"></div>
-      </div>
-
-      <div class="hero-content">
-    <div class="container">
-        <div class="row gy-4 offset-lg-2 gx-lg-5 align-items-center">
-            <!-- Resim (Sol Taraf) -->
-            <div class="col-lg-6 order-lg-1" data-aos="fade-right" data-aos-delay="200">
-                <div class="hero-visual">
-                    <div class="profile-container">
-                        <div class="profile-background">
-                            <img src="@Url.Content("~/img/profile/profile-2.jpg")" alt="Sudenaz Çınar" class="profile-image">
+        <section id="hero" class="hero section">      
+          <div class="background-elements">
+              <div class="bg-circle circle-1"></div>
+              <div class="bg-circle circle-2"></div>
+          </div>
+          <div class="hero-content">
+            <div class="container">
+                <div class="row gy-4 offset-lg-2 gx-lg-5 align-items-center">
+                    <!-- Resim (Sol Taraf) -->
+                    <div class="col-lg-6 order-lg-1" data-aos="fade-right" data-aos-delay="200">
+                        <div class="hero-visual">
+                            <div class="profile-container">
+                                <div class="profile-background">
+                                    <img src="@Url.Content("~/img/profile/profile-2.jpg")" alt="Sudenaz Çınar" class="profile-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Metin İçeriği (Sağ Taraf) -->
+                    <div class="col-lg-6 order-lg-2" data-aos="fade-left" data-aos-delay="10">
+                        <div class="hero-text">
+                            <h1>Merhaba Adım <span class="accent-text">@Model.Me?.Name</span></h1>
+                            <p class="lead">Ben <span class="typed" data-typed-items="Bilgisayar Mühendisi"></span></p>
+                            <p class="description">@Model.Text?.Text1</p>
+                        </div>
+                        <div class="hero-actions">
+                            <a href="#portfolio" class="btn btn-primary">Projelerime Göz At</a>
+                            <a href="#contact" class="btn btn-outline">Benimle iletişime geç</a>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Metin İçeriği (Sağ Taraf) -->
-            <div class="col-lg-6 order-lg-2" data-aos="fade-left" data-aos-delay="10">
-                <div class="hero-text">
-                    <h1>MERHABA Adım <span class="accent-text">anasayfa1</span></h1>
-                    <p class="lead">Ben <span class="typed" data-typed-items="Bilgisayar Mühendisi"></span></p>
-                    <p class="description">anasayfa3</p>
+          </div>
+        </section>
+
+        <!-- HAKKIMDA SECTİONN -->
+
+        <section id="about" class="about section">
+          <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-2 " data-aos="zoom-in" data-aos-delay="200">
+                    <div class="profile-card">
+                      <div class="profile-header">
+                        <div class="profile-image">
+                          <img src="~/img/profile/profile-square-3.jpg" alt="Profile Image" class="img-fluid">
+                        </div>
+                        <div class="profile-badge">
+                          <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                      </div>
+                      <div class="profile-content">
+                        <h3>@Model.Me?.Name</h3>
+                        <h3>@Model.Me?.Surname</h3>
+                        <p class="profession"> @Model.Education?.SCStatement </p>
+                          <div class="contact-links">
+                            <a href="mailto:marcus@example.com" class="contact-item">
+                              <i class="bi bi-envelope"></i>@Model.Me?.Email</a>
+                            <a href="tel:+15551234567" class="contact-item">
+                              <i class="bi bi-telephone"></i>@Model.Me?.Phonenum</a>
+                            <a href="#" class="contact-item">
+                              <i class="bi bi-geo-alt"></i>@Model.Me?.Address</a>
+                          </div>
+                      </div>
+                    </div>
                 </div>
-                <div class="hero-actions">
-                    <a href="#portfolio" class="btn btn-primary">Projelerime Göz At</a>
-                    <a href="#contact" class="btn btn-outline">Benimle iletişime geç</a>
+                <div class="col-lg-4 offset-lg-2 order-lg" data-aos="fade-left" data-aos-delay="300">
+                    <div class="about-content">
+                        <div class="section-header">
+                          <span class="badge-text">Kendimi Tanıtayım</span>
+                          <h2>Selam</h2>
+                        </div>
+                        <div class="description">
+                          <p>@Model.Text?.Text2</p>              
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                              <div class="stat-number">2+</div>
+                              <div class="stat-label">Tamamlanmış Projeler</div>
+                            </div>
+                            <div class="stat-item">
+                              <div class="stat-number">2+</div>
+                              <div class="stat-label">Yıllık Deneyim</div>
+                            </div>
+                            <div class="stat-item">
+                              <div class="stat-number">100%</div>
+                              <div class="stat-label">Müşteri Memnuniyeti</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-</section>
+          </div><!-- End Container -->
+        </section>
 
+        <!-- BECERİLERİM SECTİONN -->
 
-<section id="about" class="about section">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row align-items-center">
-          <div class="col-lg-6 order-lg-2 " data-aos="zoom-in" data-aos-delay="200">
-            <div class="profile-card">
-              <div class="profile-header">
-                <div class="profile-image">
-                  <img src="~/img/profile/profile-square-3.jpg" alt="Profile Image" class="img-fluid">
-                </div>
-                <div class="profile-badge">
-                  <i class="bi bi-check-circle-fill"></i>
-                </div>
-              </div>
-
-              <div class="profile-content">
-                <h3>Hakkımda1</h3>
-                <p class="profession"> hakkımda2 </p>
-
-                <div class="contact-links">
-                  <a href="mailto:marcus@example.com" class="contact-item">
-                    <i class="bi bi-envelope"></i>hakkımda4</a>
-                  <a href="tel:+15551234567" class="contact-item">
-                    <i class="bi bi-telephone"></i>hakkımda5</a>
-                  <a href="#" class="contact-item">
-                    <i class="bi bi-geo-alt"></i>
-                    hakkımda6
-                  </a>
-                </div>
-              </div>
-            </div>
+        <section id="skills" class="skills section">
+          <div class="container section-title" data-aos="fade-up">
+            <h2>Becerilerim</h2>
           </div>
+          <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row justify-content-center">
+              <!-- Mesleki Beceriler -->
+              <div class="col-lg-5 offset-lg-1 order-lg-1 mb-4 mb-lg-0">
+                <div class="skills-category p-4" data-aos="fade-up" data-aos-delay="200">
+                  <h3 class="mb-4 fs-4 fw-bold">Mesleki Becerilerim</h3>
+                  <div class="skills-animation">
 
-          <div class="col-lg-4 offset-lg-2 order-lg" data-aos="fade-left" data-aos-delay="300">
-            <div class="about-content">
-              <div class="section-header">
-                <span class="badge-text">Get to Know Me</span>
-                <h2>hakkımda7</h2>
-              </div>
-
-              <div class="description">
-                <p>Sed  ipsa qu</p>              
-              </div>
-
-              <div class="stats-grid">
-                <div class="stat-item">
-                  <div class="stat-number">150+</div>
-                  <div class="stat-label">Projects Completed</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-number">5+</div>
-                  <div class="stat-label">Years Experience</div>
-                </div>
-                <div class="stat-item">
-                  <div class="stat-number">98%</div>
-                  <div class="stat-label">Client Satisfaction</div>
+                    <div class="skill-item mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0 fs-5">@Model.Skills?.SkillName</h4>
+                        <span class="skill-percentage fs-5 fw-medium">95%</span>
+                      </div>
+                      <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" role="progressbar" style="width: 95%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-item mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0 fs-5">@Model.Skills?.SkillName2</h4>
+                        <span class="skill-percentage fs-5 fw-medium">85%</span>
+                      </div>
+                      <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-item mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0 fs-5">@Model.Skills?.SkillName3</h4>
+                        <span class="skill-percentage fs-5 fw-medium">80%</span>
+                      </div>
+                      <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" role="progressbar" style="width: 80%"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-           </div>
-          </div>
-        </div>
-    </div><!-- End Container -->
+              <!-- Sosyal Beceriler -->
+              <div class="col-lg-5 order-lg-2">
+                <div class="skills-category p-4" data-aos="fade-up" data-aos-delay="300">
+                  <h3 class="mb-4 fs-4 fw-bold">Sosyal Becerilerim</h3>
+                  <div class="skills-animation">
 
-    </section>
-
-
-    <section id="skills" class="skills section">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Becerilerim</h2>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-              <div class="row justify-content-center">
-  <!-- Sol Beceri Kutusu -->
-  <div class="col-lg-5 offset-lg-1 order-lg-1 mb-4 mb-lg-0">
-    <div class="skills-category p-4 " data-aos="fade-up" data-aos-delay="200">
-      <h3 class="mb-4 fs-4 fw-bold">Mesleki Becerilerim</h3>
-      <div class="skills-animation">
-        <div class="skill-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0 fs-5">becerilerim4</h4>
-            <span class="skill-percentage fs-5 fw-medium">95%</span>
-          </div>
-          <div class="progress" style="height: 8px;">
-            <div class="progress-bar" role="progressbar" style="width: 95%"></div>
-          </div>
-        </div>
-
-        <div class="skill-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0 fs-5">becerilerim5</h4>
-            <span class="skill-percentage fs-5 fw-medium">85%</span>
-          </div>
-          <div class="progress" style="height: 8px;">
-            <div class="progress-bar" role="progressbar" style="width: 85%"></div>
-          </div>
-        </div>
-
-        <div class="skill-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0 fs-5">becerilerim6</h4>
-            <span class="skill-percentage fs-5 fw-medium">80%</span>
-          </div>
-          <div class="progress" style="height: 8px;">
-            <div class="progress-bar" role="progressbar" style="width: 80%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Sağ Beceri Kutusu -->
-  <div class="col-lg-5 order-lg-2">
-    <div class="skills-category p-4 " data-aos="fade-up" data-aos-delay="300">
-      <h3 class="mb-4 fs-4 fw-bold">Sosyal Becerilerim</h3>
-      <div class="skills-animation">
-        <div class="skill-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0 fs-5">becerilerim8</h4>
-            <span class="skill-percentage fs-5 fw-medium">75%</span>
-          </div>
-          <div class="progress" style="height: 8px;">
-            <div class="progress-bar" role="progressbar" style="width: 75%"></div>
-          </div>
-        </div>
-
-        <div class="skill-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0 fs-5">becerilerim9</h4>
-            <span class="skill-percentage fs-5 fw-medium">70%</span>
-          </div>
-          <div class="progress" style="height: 8px;">
-            <div class="progress-bar" role="progressbar" style="width: 70%"></div>
-          </div>
-        </div>
-
-        <div class="skill-item mb-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0 fs-5">becerilerim10</h4>
-            <span class="skill-percentage fs-5 fw-medium">65%</span>
-          </div>
-          <div class="progress" style="height: 8px;">
-            <div class="progress-bar" role="progressbar" style="width: 65%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-        </div>
-
-      </div>
-
-    </section><!-- /Skills Section -->
-
-    <section id="portfolio" class="portfolio section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Projelerim</h2>
-        <p> projelerim2</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-
-          <div class="row">
-            <div class="offset-lg-2 col-lg-5 filter-sidebar">
-              <div class="filters-wrapper" data-aos="fade-right" data-aos-delay="150">
-                <ul class="portfolio-filters isotope-filters">
-                  <li data-filter=".filter-photography">projelerim3</li>
-                </ul>
+                    <div class="skill-item mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0 fs-5">@Model.Skills?.SkillName4</h4>
+                        <span class="skill-percentage fs-5 fw-medium">75%</span>
+                      </div>
+                      <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" role="progressbar" style="width: 75%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-item mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0 fs-5">@Model.Skills?.SkillName5</h4>
+                        <span class="skill-percentage fs-5 fw-medium">70%</span>
+                      </div>
+                      <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" role="progressbar" style="width: 70%"></div>
+                      </div>
+                    </div>
+                    <div class="skill-item mb-4">
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0 fs-5">@Model.Skills?.SkillName6</h4>
+                        <span class="skill-percentage fs-5 fw-medium">65%</span>
+                      </div>
+                      <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" role="progressbar" style="width: 65%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div class="col-lg-5">
-              <div class="row gy-4 portfolio-container isotope-container" data-aos="fade-up" data-aos-delay="200">
 
-                <div class="col-lg-8 order-lg-2 portfolio-item isotope-item filter-photography">
-                  <div class="portfolio-wrap">
-                    <img src="@Url.Content("~/img/portfolio/portfolio-portrait-1.webp")"" class="img-fluid" alt="Portfolio Image" loading="lazy">
-                    <div class="portfolio-info">
-                      <div class="content">
-                        <span class="category">Öz Geçmişim</span>
-                        <div class="portfolio-links">
-                          <a href="@Url.Content("~/img/portfolio/portfolio-portrait-1.webp")"" class="glightbox" title="Capturing Moments"><i class="bi bi-plus-lg"></i></a>
-                          
+        <!-- PROJELERİM SECTİON -->
+        <section id="portfolio" class="portfolio section">
+          <div class="container section-title" data-aos="fade-up">
+            <h2>Projelerim</h2>
+            <p>projelerim2</p>
+          </div>
+          <div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+              <div class="row">
+                <div class="offset-lg-2 col-lg-5 filter-sidebar">
+                  <div class="filters-wrapper" data-aos="fade-right" data-aos-delay="150">
+                    <ul class="portfolio-filters isotope-filters">
+                      <li data-filter=".filter-photography">@Model.Text?.Text3</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-lg-5">
+                  <div class="row gy-4 portfolio-container isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="col-lg-8 order-lg-2 portfolio-item isotope-item filter-photography">
+                      <div class="portfolio-wrap">
+                        <img src="@Url.Content("~/img/portfolio/portfolio-portrait-1.webp")" class="img-fluid" alt="Portfolio Image" loading="lazy">
+                        <div class="portfolio-info">
+                          <div class="content">
+                            <span class="category">Öz Geçmişim</span>
+                            <div class="portfolio-links">
+                              <a href="@Url.Content("~/img/portfolio/portfolio-portrait-1.webp")" class="glightbox" title="Capturing Moments">
+                                <i class="bi bi-plus-lg"></i>
+                              </a>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div><!-- End Portfolio Item -->
-              </div><!-- End Portfolio Container -->
+                </div>
+              </div> 
             </div>
-            </div><!-- End Row -->
+          </div>
 
-        </div>
+        </section>
 
-      </div>
 
-    </section> <!-- /Portfolio Section -->
-      
-<section id="contact" class="contact section">
-
-              <!-- Section Title -->
-              <div class="container section-title" data-aos="fade-up">
-                <h2> İletişim Bilgilerim</h2>
-                <p>Herhangi bir sorunuz için lütfen benimle iletişime geçmekten çekinmeyin. :)</p>
-              </div><!-- End Section Title -->
-
-              <div class="container">
-
-                <div class="row offset-lg-2 g-4 g-lg-5">
-                  <div class="col-lg-5">
-                    <div class="info-box">
-                      <h3> İletişim Bilgileri</h3>
-                      
-
-                      <div class="info-item">
-                        <div class="icon-box">
-                          <i class="bi bi-geo-alt"></i>
-                        </div>
-                        <div class="content">
-                          <h4>Konum</h4>
-                          <p>iletişim4</p>
-                        </div>
-                      </div>
-
-                      <div class="info-item">
-                        <div class="icon-box">
-                          <i class="bi bi-telephone"></i>
-                        </div>
-                        <div class="content">
-                          <h4>Telefon Numarası</h4>
-                          <p>iletişim6</p>
-                        </div>
-                      </div>
-
-                      <div class="info-item">
-                        <div class="icon-box">
-                          <i class="bi bi-envelope"></i>
-                        </div>
-                        <div class="content">
-                          <h4>Mail</h4>
-                          <p>iletişim8</p>
-                        </div>
-                      </div>
+            <!-- iLETİŞİM SECTİON -->
+          
+        <section id="contact" class="contact section">
+          <div class="container section-title" data-aos="fade-up">
+            <h2>İletişim Bilgilerim</h2>
+            <p>Herhangi bir sorunuz için lütfen benimle iletişime geçmekten çekinmeyin. :)</p>
+          </div>
+          <div class="container">
+            <div class="row offset-lg-2 g-4 g-lg-5">
+              <!-- İletişim Bilgileri -->
+              <div class="col-lg-5">
+                <div class="info-box">
+                  <h3>İletişim Bilgileri</h3>
+                  <div class="info-item">
+                    <div class="icon-box">
+                      <i class="bi bi-geo-alt"></i>
+                    </div>
+                    <div class="content">
+                      <h4>Konum</h4>
+                      <p>@Model.Me?.Address</p>
                     </div>
                   </div>
-
-                  <div class="col-lg-7">
-                    <div class="contact-form">
-                      <h3>Bana Ulaşın</h3>
-
-                      <form action="forms/contact.php" method="post" class="php-email-form">
-                        <div class="row gy-4 gx-4">
-
-                          <div class="col-md-6">
-                            <input type="text" name="name" class="form-control" placeholder="Adınız" required="">
-                          </div>
-
-                          <div class="col-md-6 ">
-                            <input type="email" class="form-control" name="email" placeholder="Mail Adresiniz" required="">
-                          </div>
-
-                          <div class="col-12">
-                            <input type="text" class="form-control" name="subject" placeholder="Konu" required="">
-                          </div>
-
-                          <div class="col-12">
-                            <textarea class="form-control" name="message" rows="6" placeholder="Mesajınız" required=""></textarea>
-                          </div>
-
-                          <div class="col-12 text-center">
-                            <div class="loading">Yükleniyor</div>
-                            <div class="error-message">Mesajınız İletilemedi. lütfen Tekrar Deneyin!</div>
-                            <div class="sent-message">Mesajınız İletildi. Teşekkürler!</div>
-
-                            <button type="submit" class="btn">Mesajı Gönder</button>
-                          </div>
-
-                        </div>
-                      </form>
-
+                  <div class="info-item">
+                    <div class="icon-box">
+                      <i class="bi bi-telephone"></i>
+                    </div>
+                    <div class="content">
+                      <h4>Telefon Numarası</h4>
+                      <p>@Model.Me?.Phonenum</p>
+                    </div>
+                  </div>
+                  <div class="info-item">
+                    <div class="icon-box">
+                      <i class="bi bi-envelope"></i>
+                    </div>
+                    <div class="content">
+                      <h4>Mail</h4>
+                      <p>@Model.Me?.Email</p>
                     </div>
                   </div>
 
                 </div>
-
               </div>
+              <!-- İletişim Formu -->
+              <div class="col-lg-7">
+                <div class="contact-form">
+                  <h3>Bana Ulaşın</h3>
+                  <form id="my-form" action="https://formspree.io/f/xvgqzlnd" method="POST">
+                    <div class="row gy-4 gx-4">
+                      <div class="col-md-6">
+                        <input type="text" name="name" class="form-control" placeholder="Adınız" required>
+                      </div>
+                      <div class="col-md-6">
+                        <input type="email" class="form-control" name="email" placeholder="Mail Adresiniz" required>
+                      </div>
+                      <div class="col-12">
+                        <input type="text" class="form-control" name="subject" placeholder="Konu" required>
+                      </div>
+                      <div class="col-12">
+                        <textarea class="form-control" name="message" rows="6" placeholder="Mesajınız" required></textarea>
+                      </div>
+                      <div class="col-12 text-center">
+                        <button type="submit" id="my-form-button" class="btn btn-primary">Mesajı Gönder</button>
+                        <p id="my-form-status" style="margin-top: 1rem; font-weight: bold;"></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            </section><!-- /Contact Section -->
 
-    <footer id="footer" class="footer position-relative">
-    <div class="container">
-      <div class="copyright text-center ">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">Portfolio</strong> <span>All Rights Reserved</span></p>
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="#">Süde</a>
-      </div>
-    </div>
-  
-  </footer>
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var btn = document.getElementById("goToLoginBtn");
-    btn.addEventListener("click", function () {
-      window.location.href = '@Url.Action("Login", "Login")';
-    });
-  });
-</script>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <script src="@Url.Content("~/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
-  <script src="@Url.Content("~/vendor/php-email-form/validate.js")"></script>
-  <script src="@Url.Content("~/vendor/aos/aos.js")"></script>
-  <script src="@Url.Content("~/vendor/typed.js/typed.umd.js")"></script>
-  <script src="@Url.Content("~/vendor/purecounter/purecounter_vanilla.js")"></script>
-  <script src="@Url.Content("~/vendor/waypoints/noframework.waypoints.js")"></script>
-  <script src="@Url.Content("~/vendor/isotope-layout/isotope.pkgd.min.js")"></script>
-  <script src="@Url.Content("~/vendor/imagesloaded/imagesloaded.pkgd.min.js")"></script>
-  <script src="@Url.Content("~/vendor/glightbox/js/glightbox.min.js")"></script>
-  <script src="@Url.Content("~/vendor/swiper/swiper-bundle.min.js")"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+        <!-- FOOTER-->
+        <footer id="footer" class="footer position-relative">
+          <div class="container">
+            <div class="copyright text-center ">
+              <p>© <span>Copyright</span> <strong class="px-1 sitename">Portfolio</strong> <span>All Rights Reserved</span></p>
+            </div>
+            <div class="credits">Designed by <a href="#">Süde</a></div>
+          </div>
+        </footer>
+
+        
+          <!-- LOGİN SCRİPTİ -->
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            var btn = document.getElementById("goToLoginBtn");
+            btn.addEventListener("click", function () {
+              window.location.href = '@Url.Action("Login", "Login")';
+            });
+          });
+        </script>
+
+        <!-- SCRİPTLER -->
+
+          <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+          <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+          <script src="@Url.Content("~/vendor/bootstrap/js/bootstrap.bundle.min.js")"></script>
+          <script src="@Url.Content("~/vendor/php-email-form/validate.js")"></script>
+          <script src="@Url.Content("~/vendor/aos/aos.js")"></script>
+          <script src="@Url.Content("~/vendor/typed.js/typed.umd.js")"></script>
+          <script src="@Url.Content("~/vendor/purecounter/purecounter_vanilla.js")"></script>
+          <script src="@Url.Content("~/vendor/waypoints/noframework.waypoints.js")"></script>
+          <script src="@Url.Content("~/vendor/isotope-layout/isotope.pkgd.min.js")"></script>
+          <script src="@Url.Content("~/vendor/imagesloaded/imagesloaded.pkgd.min.js")"></script>
+          <script src="@Url.Content("~/vendor/glightbox/js/glightbox.min.js")"></script>
+          <script src="@Url.Content("~/vendor/swiper/swiper-bundle.min.js")"></script>
+            @await RenderSectionAsync("Scripts", required: false)
+            <script>
+              var form = document.getElementById("my-form");
+              async function handleSubmit(event) {
+                event.preventDefault();
+                var status = document.getElementById("my-form-status");
+                var data = new FormData(event.target);
+                fetch(event.target.action, {
+                  method: form.method,
+                  body: data,
+                  headers: {
+                      'Accept': 'application/json'
+                  }
+                }).then(response => {
+                  if (response.ok) {
+                    status.innerHTML = "Mesajınız başarıyla gönderildi!";
+                    status.style.color = "green";
+                    form.reset()
+                  } else {
+                    response.json().then(data => {
+                      if (Object.hasOwn(data, 'errors')) {
+                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
+                      } else {
+                        status.innerHTML = "Gönderim sırasında bir hata oluştu.";
+                      }
+                      status.style.color = "red";
+                    })
+                  }
+                }).catch(error => {
+                  status.innerHTML = "Sunucuya ulaşılamadı. Lütfen daha sonra tekrar deneyin.";
+                  status.style.color = "red";
+                });
+              }
+
+              form.addEventListener("submit", handleSubmit);
+            </script>
+
+    </body>
 </html>

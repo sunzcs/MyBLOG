@@ -109,6 +109,7 @@ namespace myblog.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
+
         {
             var text = await _context.Text.FindAsync(id);
             if (text != null)
@@ -117,6 +118,29 @@ namespace myblog.Controllers
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAll([FromBody] Text updated)
+        {
+            if (updated == null)
+            {
+                return Json(new { success = false, message = "Veri boş." });
+            }
+
+            var Text = await _context.Text.FirstOrDefaultAsync(t => t.TextId == updated.TextId);
+            if (Text == null)
+            {
+                return Json(new { success = false, message = "Kayıt bulunamadı." });
+            }
+
+            Text.Text1 = updated.Text1;
+            Text.Text2 = updated.Text2;
+            Text.Text3 = updated.Text3;
+
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
         }
 
         

@@ -2,10 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using myblog.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
+// Authentication servisi ekle
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -13,44 +12,34 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LogoutPath = "/Account/Logout";
     });
 
-
-// Servisleri ekle
+// MVC servisini ekle
 builder.Services.AddControllersWithViews();
 
+// DbContext servis eklemesi
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
-// Hata ve güvenlik yapılandırması
+// Hata ve güvenlik middleware'leri
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
-app.UseRouting();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-});
-
-
-// HTTPS yönlendirmesi ve statik dosyalar
+// HTTPS ve statik dosyalar
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-// Yönlendirme ve yetkilendirme
 app.UseRouting();
+
+app.UseAuthentication();  // Authentication middleware unutulmasın
 app.UseAuthorization();
 
-// Default route
+// Route tanımı (top-level routing kullanımı)
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-    
+
 app.Run();
-
-

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using myblog.Models;
 using myblog.Data;
 using System.Diagnostics;
+using myblog.Models.ViewModel;
 
 namespace myblog.Controllers
 {
@@ -18,38 +19,46 @@ namespace myblog.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new ViewModel
+            {
+                Me = _context.Me.Find(1),
+                Education = _context.Education.Find(1),
+                Skills = _context.Skills.Find(1),
+                Text = _context.Text.Find(1)
+
+            };
+            return View(viewModel);
         }
 
-        public IActionResult AnaSayfa()
+        public IActionResult Me()
         {
             var me = _context.Me.FirstOrDefault(); // Liste değil, tek kişi
-            return View("~/Views/Shared/AdminPages/_AnaSayfa.cshtml", me);
+            return View("~/Views/Shared/AdminPages/Me.cshtml", me);
         }
 
-        public IActionResult Hakkımda()
+        public IActionResult Education()
         {
             var education = _context.Education.FirstOrDefault();
-            return View("~/Views/Shared/AdminPages/_Hakkımda.cshtml", education);
+            return View("~/Views/Shared/AdminPages/Education.cshtml", education);
         }
 
 
-        public IActionResult Becerilerim()
+        public IActionResult Skills()
         {
             var skills = _context.Skills.FirstOrDefault();
-            return View("~/Views/Shared/AdminPages/_Becerilerim.cshtml", skills);
+            return View("~/Views/Shared/AdminPages/Skills.cshtml", skills);
         }
 
         public IActionResult Projelerim()
         {
-            var text = _context.Text.FirstOrDefault();
-            return View("~/Views/Shared/AdminPages/_Projelerim.cshtml", text);
+            var sLang = _context.SLang.FirstOrDefault();
+            return View("~/Views/Shared/AdminPages/_Projelerim.cshtml", sLang);
         }
 
-        public IActionResult İletişim()
+        public IActionResult Text()
         {
-            var slang = _context.SLang.FirstOrDefault();
-            return View("~/Views/Shared/AdminPages/_İletişim.cshtml", slang);
+            var text = _context.Text.FirstOrDefault();
+            return View("~/Views/Shared/AdminPages/Text.cshtml", text);
         }
 
         public IActionResult Privacy()

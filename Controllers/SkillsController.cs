@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using myblog.Data;
 using myblog.Models;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace myblog.Controllers
 {
@@ -14,66 +16,37 @@ namespace myblog.Controllers
             _context = context;
         }
 
-        // Sayfa: Listeleme
+        // Tek veri döndürdüğümüz için listelemeye gerek yok
         public async Task<IActionResult> Index()
         {
-            var skills = await _context.Skills.ToListAsync();
+            var skills = await _context.Skills.FirstOrDefaultAsync();
             return View(skills);
         }
 
-        // Sayfa: Yeni beceri oluşturma formu
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // Sayfa: Yeni beceriyi kaydet
         [HttpPost]
-        public async Task<IActionResult> Create(Skills skills)
+        public async Task<IActionResult> UpdateAll([FromBody] Skills updated)
         {
-            if (!ModelState.IsValid)
-                return View(skills);
+            if (updated == null)
+            {
+                return Json(new { success = false, message = "Veri boş." });
+            }
 
-            _context.Skills.Add(skills);
+            var skills = await _context.Skills.FirstOrDefaultAsync(s => s.SkillsId == updated.SkillsId);
+            if (skills == null)
+            {
+                return Json(new { success = false, message = "Kayıt bulunamadı." });
+            }
+
+            skills.SkillName = updated.SkillName;
+            skills.SkillName2 = updated.SkillName2;
+            skills.SkillName3 = updated.SkillName3;
+            skills.SkillName4 = updated.SkillName4;
+            skills.SkillName5 = updated.SkillName5;
+            skills.SkillName6 = updated.SkillName6;
+
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return Json(new { success = true });
         }
-
-        // Sayfa: Düzenleme formu
-        public async Task<IActionResult> Edit(int id)
-        {
-            var skill = await _context.Skills.FindAsync(id);
-            if (skill == null)
-                return NotFound();
-
-            return View(skill);
-        }
-
-        // Sayfa: Düzenleme formu POST
-        [HttpPost]
-        public async Task<IActionResult> Edit(Skills skills)
-        {
-            if (!ModelState.IsValid)
-                return View(skills);
-
-            _context.Skills.Update(skills);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        // Sayfa: Silme
-        public async Task<IActionResult> Delete(int id)
-        {
-            var skill = await _context.Skills.FindAsync(id);
-            if (skill == null)
-                return NotFound();
-
-            _context.Skills.Remove(skill);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        
-       
     }
 }

@@ -12,7 +12,7 @@ using myblog.Data;
 namespace myblog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250711065634_Skills")]
+    [Migration("20250721090001_Skills")]
     partial class Skills
     {
         /// <inheritdoc />
@@ -130,9 +130,46 @@ namespace myblog.Migrations
                     b.Property<string>("SkillName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SkillName2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName5")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName6")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("SkillsId");
 
                     b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("myblog.Models.Text", b =>
+                {
+                    b.Property<int>("TextId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TextId"));
+
+                    b.Property<string>("Text1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TextId");
+
+                    b.ToTable("Text");
                 });
 #pragma warning restore 612, 618
         }
