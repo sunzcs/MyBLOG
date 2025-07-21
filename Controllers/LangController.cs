@@ -47,6 +47,23 @@ namespace myblog.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public IActionResult UpdateAll([FromBody] Me updated)
+        {
+            if (updated==null)
+            {
+                return Json(new { success = false, message = "boş veri." });
+            }
+            var lang = _context.Lang.FirstOrDefault(l => l.LangId == updated.Id);
+            if (lang == null) return Json(new { success = false, message = "Kullanıcı bulunamadı." });
+
+            lang.LangName = updated.Name;
+            lang.LangLevel = updated.Surname;
+            _context.SaveChanges();
+
+            return Json(new { success = true });
+        }
         
     }
 }
+ 

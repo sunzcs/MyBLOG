@@ -1,0 +1,126 @@
+@model myblog.Models.Lang
+@{
+    ViewBag.Title = "Dil Becerisi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <title>Becerilerim</title>
+<style>
+            table {
+                width: 50%;
+                border-collapse: collapse;
+                margin-bottom: 10px;
+            }
+            th, td {
+                border: 1px solid #444;
+                padding: 8px;
+                text-align: left;
+            }
+            button {
+                padding: 8px 16px;
+                font-size: 16px;
+                background-color: #007bff;
+                color: white;
+            border-radius: 6px;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .modal-backdrop {
+                display: none !important;
+            }
+            
+            /* Modal arka planını şeffaf yap */
+            .modal {
+                background-color: transparent;
+            }
+</style>
+
+<body>
+
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>...</th>
+                    <th>DEĞERLER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Dil</td><td id="Lang-LangName">@Model.LangName</td></tr>
+                <tr><td>Seviyesi</td><td id="Lang-LangLevel">@Model.LangLevel</td></tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary edit-btn" id="editBtn">Düzenle</button>
+
+
+                                                @*Düzeltme için modal ksımı*@
+    <div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tüm Bilgileri Düzenle</h5>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control mb-2" id="input-LangName" placeholder="Dil">
+                    <input class="form-control mb-2" id="input-LangLevel" placeholder="Seviye">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button class="btn btn-primary" id="saveAllChanges">Kaydet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                                        @*Veri tabanına veri yollamak*@
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = new bootstrap.Modal(document.getElementById('editModal'));
+
+        // Modalı aç
+            document.getElementById('editBtn').addEventListener('click', () => {
+            document.getElementById('input-LangName').value = document.getElementById('Lang-LangName').textContent.trim();
+            document.getElementById('input-LangLevel').value = document.getElementById('Lang-LangLevel').textContent.trim();
+            
+            
+
+            modal.show();
+        });
+
+        // Kaydet butonuna basılınca tüm verileri gönder
+        document.getElementById('saveAllChanges').addEventListener('click', () => {
+            const data = {
+                LangId: 1, // ID sabit
+                LangName: document.getElementById('input-LangName').value.trim(),
+                LangLevel: document.getElementById('input-LangLevel').value.trim(),
+                
+            };
+
+            fetch('/Lang/UpdateAll', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                if (!response.success) {
+                    alert(response.message || "Bilinmeyen bir hata oluştu.");
+                    return;
+                }
+
+                document.getElementById('Lang-LangName').textContent = data.LangName;
+                document.getElementById('Lang-LangLevel').textContent = data.LangLevel;
+                
+                modal.hide();
+            })
+            .catch(err => alert("Sunucu hatası: " + err.message));
+        });
+    });
+</script>
+
+</body>

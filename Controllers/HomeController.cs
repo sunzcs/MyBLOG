@@ -49,10 +49,10 @@ namespace myblog.Controllers
             return View("~/Views/Shared/AdminPages/Skills.cshtml", skills);
         }
 
-        public IActionResult Projelerim()
+        public IActionResult Lang()
         {
-            var sLang = _context.SLang.FirstOrDefault();
-            return View("~/Views/Shared/AdminPages/_Projelerim.cshtml", sLang);
+            var Lang = _context.Lang.FirstOrDefault();
+            return View("~/Views/Shared/AdminPages/Lang.cshtml", Lang);
         }
 
         public IActionResult Text()
