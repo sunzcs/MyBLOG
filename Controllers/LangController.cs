@@ -48,17 +48,17 @@ namespace myblog.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateAll([FromBody] Me updated)
+        public IActionResult UpdateAll([FromBody] Lang updated)
         {
             if (updated==null)
             {
                 return Json(new { success = false, message = "boş veri." });
             }
-            var lang = _context.Lang.FirstOrDefault(l => l.LangId == updated.Id);
+            var lang = _context.Lang.FirstOrDefault(l => l.LangId == updated.LangId);
             if (lang == null) return Json(new { success = false, message = "Kullanıcı bulunamadı." });
 
-            lang.LangName = updated.Name;
-            lang.LangLevel = updated.Surname;
+            lang.LangName = updated.LangName;
+            lang.LangLevel = updated.LangLevel;
             _context.SaveChanges();
 
             return Json(new { success = true });
