@@ -45,14 +45,15 @@ namespace myblog.Controllers
 
         public IActionResult Skills()
         {
-            var skills = _context.Skills.FirstOrDefault();
-            return View("~/Views/Shared/AdminPages/Skills.cshtml", skills);
+            var skills = _context.Skills.ToList(); // Tüm kayıtları al
+            return View("~/Views/Shared/AdminPages/Skills.cshtml", skills); // Listeyi view'a gönder
         }
+
 
         public IActionResult Lang()
         {
-            var Lang = _context.Lang.FirstOrDefault();
-            return View("~/Views/Shared/AdminPages/Lang.cshtml", Lang);
+            var lang = _context.Lang.ToList();
+            return View("~/Views/Shared/AdminPages/Lang.cshtml", lang);
         }
 
         public IActionResult Text()

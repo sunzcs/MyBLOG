@@ -1,15 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace myblog.Models
 {
     public class Skills
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SkillsId { get; set; }
         public string? SkillName { get; set; }
-        public string? SkillName2 { get; set; }
-        public string? SkillName3 { get; set; }
-        public string? SkillName4 { get; set; }
-        public string? SkillName5 { get; set; }
-        public string? SkillName6 { get; set; }
-
     }
 }
  

@@ -85,6 +85,21 @@ namespace myblog.Migrations
                 {
                     table.PrimaryKey("PK_SLang", x => x.SlangId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Text",
+                columns: table => new
+                {
+                    TextId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text3 = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Text", x => x.TextId);
+                });
         }
 
         /// <inheritdoc />
@@ -104,6 +119,9 @@ namespace myblog.Migrations
 
             migrationBuilder.DropTable(
                 name: "SLang");
+
+            migrationBuilder.DropTable(
+                name: "Text");
         }
     }
 }

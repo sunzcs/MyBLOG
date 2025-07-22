@@ -12,8 +12,8 @@ using myblog.Data;
 namespace myblog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250711065654_SLang")]
-    partial class SLang
+    [Migration("20250722112807_Text")]
+    partial class Text
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,6 +133,28 @@ namespace myblog.Migrations
                     b.HasKey("SkillsId");
 
                     b.ToTable("Skills");
+                });
+
+            modelBuilder.Entity("myblog.Models.Text", b =>
+                {
+                    b.Property<int>("TextId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TextId"));
+
+                    b.Property<string>("Text1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TextId");
+
+                    b.ToTable("Text");
                 });
 #pragma warning restore 612, 618
         }

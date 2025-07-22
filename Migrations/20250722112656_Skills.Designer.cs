@@ -12,7 +12,7 @@ using myblog.Data;
 namespace myblog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250721090001_Skills")]
+    [Migration("20250722112656_Skills")]
     partial class Skills
     {
         /// <inheritdoc />
@@ -128,21 +128,6 @@ namespace myblog.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SkillsId"));
 
                     b.Property<string>("SkillName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName6")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SkillsId");

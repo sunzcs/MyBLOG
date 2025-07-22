@@ -16,10 +16,10 @@ namespace myblog.Controllers
             _context = context;
         }
 
-        // Tek veri döndürdüğümüz için listelemeye gerek yok
+        // Tüm verileri listele
         public async Task<IActionResult> Index()
         {
-            var skills = await _context.Skills.FirstOrDefaultAsync();
+            var skills = await _context.Skills.ToListAsync();
             return View(skills);
         }
 
@@ -31,22 +31,38 @@ namespace myblog.Controllers
                 return Json(new { success = false, message = "Veri boş." });
             }
 
-            var skills = await _context.Skills.FirstOrDefaultAsync(s => s.SkillsId == updated.SkillsId);
-            if (skills == null)
+            var skill = await _context.Skills.FirstOrDefaultAsync(s => s.SkillsId == updated.SkillsId);
+            if (skill == null)
             {
                 return Json(new { success = false, message = "Kayıt bulunamadı." });
             }
 
-            skills.SkillName = updated.SkillName;
-            skills.SkillName2 = updated.SkillName2;
-            skills.SkillName3 = updated.SkillName3;
-            skills.SkillName4 = updated.SkillName4;
-            skills.SkillName5 = updated.SkillName5;
-            skills.SkillName6 = updated.SkillName6;
+            skill.SkillName = updated.SkillName;
 
             await _context.SaveChangesAsync();
 
             return Json(new { success = true });
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] Skills newSkill)
+            {
+                if (string.IsNullOrWhiteSpace(newSkill.SkillName))
+                {
+                    return Json(new { success = false, message = "Yetenek boş olamaz." });
+                }
+
+                try
+                {
+                    _context.Skills.Add(newSkill);
+                    await _context.SaveChangesAsync();
+                    return Json(new { success = true });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
+            }
+
     }
 }

@@ -5,7 +5,7 @@
 namespace myblog.Migrations
 {
     /// <inheritdoc />
-    public partial class SLang : Migration
+    public partial class Text : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -12,8 +12,8 @@ using myblog.Data;
 namespace myblog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250714104304_Text")]
-    partial class Text
+    [Migration("20250722112634_Education")]
+    partial class Education
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

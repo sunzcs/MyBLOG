@@ -127,21 +127,6 @@ namespace myblog.Migrations
                     b.Property<string>("SkillName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SkillName2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillName6")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("SkillsId");
 
                     b.ToTable("Skills");
