@@ -4,6 +4,97 @@
     ViewBag.Title = "Yeteneklerim";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    table {
+        width: 60%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 20px;
+        background: #fff;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10), 0 1.5px 4px rgba(0,0,0,0.08);
+        border-radius: 16px;
+        overflow: hidden;
+        font-family: 'Nunito', 'Roboto', sans-serif;
+    }
+    th {
+        background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        border: none;
+        padding: 16px 12px;
+        text-align: left;
+    }
+    td {
+        border: none;
+        padding: 14px 12px;
+        font-size: 1rem;
+        color: #222;
+        background: #f8f9fa;
+        transition: background 0.2s;
+    }
+    tr {
+        border-bottom: 1px solid #eaeaea;
+    }
+    tr:last-child td {
+        border-bottom: none;
+    }
+    tr:hover td {
+        background: #e3f0ff;
+    }
+    input.form-control {
+        border-radius: 8px;
+        border: 1px solid #b3d7ff;
+        font-size: 1rem;
+        padding: 8px 12px;
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        transition: border 0.2s;
+    }
+    input.form-control:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    .input-group {
+        width: 60%;
+        margin-top: 24px;
+    }
+    button.btn-primary, button.btn-success, button.btn-danger {
+        padding: 8px 18px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    button.btn-primary {
+        background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+        color: white;
+    }
+    button.btn-primary:hover {
+        background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    button.btn-success {
+        background: linear-gradient(90deg, #28a745 60%, #00c6ff 100%);
+        color: white;
+    }
+    button.btn-success:hover {
+        background: linear-gradient(90deg, #218838 60%, #28a745 100%);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    button.btn-danger {
+        background: linear-gradient(90deg, #dc3545 60%, #ff6a6a 100%);
+        color: white;
+    }
+    button.btn-danger:hover {
+        background: linear-gradient(90deg, #b71c1c 60%, #dc3545 100%);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+</style>
 
 <h2>Yeteneklerim</h2>
 
@@ -57,7 +148,7 @@
                 alert("Güncellendi");
             } else {
                 alert(data.message);
-            }
+            } 
         });
     }
 

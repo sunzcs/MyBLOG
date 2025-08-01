@@ -1,0 +1,180 @@
+@model List<myblog.Models.Link>
+
+@{
+    ViewBag.Title = "Link Listesi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+    .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 32px;
+    }
+    .modern-table th, .modern-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid #f0f0f0;
+        text-align: left;
+    }
+    .modern-table th {
+        background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+    .modern-table tr:last-child td {
+        border-bottom: none;
+    }
+    .modern-table tbody tr:hover {
+        background: #f6f8fc;
+        transition: background 0.2s;
+    }
+    .modern-input {
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        padding: 8px 12px;
+        font-size: 15px;
+        width: 100%;
+        transition: border-color 0.2s;
+    }
+    .modern-input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    .modern-btn {
+        border-radius: 8px;
+        padding: 7px 18px;
+        font-size: 15px;
+        font-weight: 500;
+        margin-right: 6px;
+        border: none;
+        transition: background 0.2s, color 0.2s;
+    }
+    .modern-btn-primary {
+        background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);
+        color: #fff;
+    }
+    .modern-btn-primary:hover {
+        background: linear-gradient(90deg, #00c6ff 0%, #007bff 100%);
+        color: #fff;
+    }
+    .modern-btn-danger {
+        background: #ff4d4f;
+        color: #fff;
+    }
+    .modern-btn-danger:hover {
+        background: #d9363e;
+        color: #fff;
+    }
+    .modern-btn-success {
+        background: linear-gradient(90deg, #28a745 60%, #00c6ff 100%);
+        color: white;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .modern-btn-success:hover {
+        background: linear-gradient(90deg, #218838 60%, #28a745 100%);
+        box-shadow: none;
+    }
+    .modern-add-link {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 18px;
+        margin-top: 10px;
+    }
+</style>
+
+<h2 style="color:#007bff;font-weight:700;margin-bottom:18px;">Link Listesi</h2>
+
+<table class="modern-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Link</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var link in Model)
+        {
+            <tr>
+                <td>@link.LinkId</td>
+                <td>
+                    <input type="text" id="Link-@link.LinkId" value="@link.LinkUrl" class="modern-input" />
+                </td>
+                <td>
+                    <button class="modern-btn modern-btn-primary" onclick="updateLink(@link.LinkId)">Güncelle</button>
+                    <button class="modern-btn modern-btn-danger" onclick="deleteLink(@link.LinkId)">Sil</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modern-add-link">
+    <input type="text" id="newLink" class="modern-input" placeholder="Yeni link URL" />
+    <button class="modern-btn modern-btn-success" onclick="addLink()">Ekle</button>
+</div>
+
+<script>
+    function updateLink(id) {
+        const value = document.getElementById('Link-' + id).value;
+
+        fetch('/Link/UpdateAll', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ linkId: id, linkUrl: value })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Güncellendi");
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    function addLink() {
+        const value = document.getElementById('newLink').value;
+
+        fetch('/Link/Add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ linkUrl: value })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+
+    function deleteLink(id) {
+        if (!confirm("Bu linki silmek istediğinize emin misiniz?")) return;
+
+        fetch('/Link/Delete/' + id, {
+            method: 'POST'
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+</script>

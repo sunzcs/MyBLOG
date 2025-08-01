@@ -3,7 +3,7 @@ using myblog.Models;
 using myblog.Data;
 using System.Diagnostics;
 using myblog.Models.ViewModel;
-
+using System.Linq;
 namespace myblog.Controllers
 {
     public class HomeController : Controller
@@ -23,12 +23,15 @@ namespace myblog.Controllers
             {
                 Me = _context.Me.Find(1),
                 Education = _context.Education.Find(1),
-                Skills = _context.Skills.Find(1),
-                Text = _context.Text.Find(1)
-
+                Skills = _context.Skills.ToList(),  // Burada ToList() kullandık, çünkü ViewModel'deki Skills List<Skills> tipinde
+                Text = _context.Text.Find(1),
+                Lang = _context.Lang.ToList(),
+                Links = _context.Links.ToList(),
+                Imgs = _context.Imgs.ToList()      // Eğer Lang List ise burayı da ekledim
             };
             return View(viewModel);
         }
+
 
         public IActionResult Me()
         {
@@ -61,6 +64,17 @@ namespace myblog.Controllers
             var text = _context.Text.FirstOrDefault();
             return View("~/Views/Shared/AdminPages/Text.cshtml", text);
         }
+        public IActionResult Img()
+        {
+            var img = _context.Imgs.ToList();
+            return View("~/Views/Shared/AdminPages/Img.cshtml", img);
+        }
+        public IActionResult Link()
+        {
+            var link = _context.Links.ToList();
+            return View("~/Views/Shared/AdminPages/Link.cshtml", link);
+        }
+        
 
         public IActionResult Privacy()
         {

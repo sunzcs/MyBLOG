@@ -1,7 +1,7 @@
-@model List<myblog.Models.Skills>
+@model List<myblog.Models.Img>
 
 @{
-    ViewBag.Title = "Yeteneklerim";
+    ViewBag.Title = "Resim Listesi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <style>
@@ -43,6 +43,20 @@
     tr:hover td {
         background: #e3f0ff;
     }
+    img {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        border: 2px solid #eaeaea;
+        background: #fff;
+        max-width: 150px;
+        max-height: 120px;
+        object-fit: cover;
+        transition: box-shadow 0.2s, border 0.2s;
+    }
+    img:hover {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+        border-color: #007bff;
+    }
     input.form-control {
         border-radius: 8px;
         border: 1px solid #b3d7ff;
@@ -60,7 +74,7 @@
         width: 60%;
         margin-top: 24px;
     }
-    button.btn-primary, button.btn-success, button.btn-danger {
+    button.btn-primary, button.btn-success, button.btn-danger, button.btn-secondary {
         padding: 8px 18px;
         font-size: 16px;
         border-radius: 8px;
@@ -94,72 +108,85 @@
         background: linear-gradient(90deg, #b71c1c 60%, #dc3545 100%);
         box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     }
+    button.btn-secondary {
+        background: linear-gradient(90deg, #6c757d 60%, #b3b3b3 100%);
+        color: white;
+    }
+    button.btn-secondary:hover {
+        background: linear-gradient(90deg, #343a40 60%, #6c757d 100%);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    #updateModal {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+        padding: 24px;
+        width: 350px;
+        margin: 0 auto;
+    }
+    #updateModal h5 {
+        font-weight: 700;
+        color: #007bff;
+        letter-spacing: 1px;
+        margin-bottom: 16px;
+    }
 </style>
 
-<h2>Yeteneklerim</h2>
+<h2>Resimler</h2>
 
 <table class="table table-bordered">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Yetenek Adı</th>
+            <th>Resim</th>
             <th>İşlemler</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var skill in Model)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@skill.SkillsId</td>
+                <td>@item.ImageId</td>
                 <td>
-                    <input type="text" id="skill-@skill.SkillsId" value="@skill.SkillName" class="form-control" />
+                    <img src="@item.ImgUrl" width="150" />
                 </td>
                 <td>
-                    <button class="btn btn-primary" onclick="updateSkill(@skill.SkillsId)">Güncelle</button>
-                    <button class="btn btn-danger" onclick="deleteSkills(@skill.SkillsId)">Sil</button>
-
+                    <button class="btn btn-danger" onclick="deleteImg(@item.ImageId)">Sil</button>
+                    <button class="btn btn-primary" onclick="showUpdateModal(@item.ImageId, '@item.ImgUrl')">Güncelle</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<h4>Yeni Yetenek Ekle</h4>
-<div class="input-group mb-3">
-    <input type="text" id="newSkill" class="form-control" placeholder="Yeni yetenek adı" />
-    <button class="btn btn-success" onclick="addSkill()">Ekle</button>
+<hr />
+
+<h4>Yeni Resim Yükle</h4>
+
+<form asp-controller="Img" asp-action="Upload" method="post" enctype="multipart/form-data">
+    <div class="input-group mb-3">
+        <input type="file" name="file" class="form-control" required />
+        <button class="btn btn-success" type="submit">Yükle</button>
+    </div>
+</form>
+
+<!-- Güncelle Modal -->
+<div id="updateModal" style="display:none; margin-top:20px;">
+    <h5>Resim URL'sini Güncelle</h5>
+    <input type="hidden" id="updateId" />
+    <input type="text" id="updateUrl" class="form-control" />
+    <br />
+    <button class="btn btn-success" onclick="updateImg()">Kaydet</button>
+    <button class="btn btn-secondary" onclick="hideUpdateModal()">İptal</button>
 </div>
 
+<!-- 🔽 Scripts doğrudan sayfada -->
 <script>
-    function updateSkill(id) {
-        const value = document.getElementById('skill-' + id).value;
+    function deleteImg(ImageId) {
+        if (!confirm("Silmek istediğine emin misin?")) return;
 
-        fetch('/Skills/UpdateAll', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ skillsId: id, skillName: value })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                alert("Güncellendi");
-            } else {
-                alert(data.message);
-            }
-        });
-    }
-
-        function addSkill() {
-        const value = document.getElementById('newSkill').value;
-
-        fetch('@Url.Action("Add", "Skills")', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ skillName: value })
+        fetch('/Img/Delete/' + ImageId, {
+            method: 'POST'
         })
         .then(res => res.json())
         .then(data => {
@@ -170,20 +197,35 @@
             }
         });
     }
-    function deleteSkills(id) {
-            if (!confirm("Bu yeteneği silmek istediğinizden emin misiniz?")) return;
 
-            fetch('/Skills/Delete/' + id, {
-                method: 'POST'
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    location.reload();
-                } else {
-                    alert(data.message);
-                }
-            });
-        }
+    function showUpdateModal(id, url) {
+        document.getElementById("updateId").value = id;
+        document.getElementById("updateUrl").value = url;
+        document.getElementById("updateModal").style.display = "block";
+    }
 
+    function hideUpdateModal() {
+        document.getElementById("updateModal").style.display = "none";
+    }
+
+    function updateImg() {
+        const id = document.getElementById("updateId").value;
+        const url = document.getElementById("updateUrl").value;
+
+        fetch('/Img/UpdateAll', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ imageId: id, imgUrl: url })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
 </script>

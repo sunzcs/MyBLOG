@@ -1,9 +1,8 @@
 ﻿
 @model myblog.Models.ViewModel.ViewModel
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
       <meta charset="utf-8">
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
       <title>Myers BLOG</title>
@@ -23,31 +22,36 @@
       <link href="@Url.Content("~/vendor/bootstrap/css/bootstrap.min.css")" rel="stylesheet">
       <link href="@Url.Content("~/vendor/bootstrap-icons/bootstrap-icons.css")" rel="stylesheet">
       <link href="@Url.Content("~/vendor/aos/aos.css")" rel="stylesheet">
-      <link href="@Url.Content("~/vendor/glightbox/css/glightbox.min.css")" rel="stylesheet">
       <link href="@Url.Content("~/vendor/swiper/swiper-bundle.min.css")" rel="stylesheet">
 
       <!-- Main CSS File -->
       <link href="@Url.Content("~/css/main.css")"rel="stylesheet">
 
   </head>
-    <body>
+    <body> 
             <header id="header" class="header dark-background d-flex flex-column justify-content-center">
               <i class="header-toggle d-xl-none bi bi-list"></i>
               <div class="header-container d-flex flex-column align-items-start">
                 <nav id="navmenu" class="navmenu">
                     <ul>
-                      <li><a href="#hero" class="active"><i class="bi bi-house navicon"></i> Ana Sayfa </a></li>
-                      <li><a href="#about"><i class="bi bi-person navicon"></i> Hakkımda </a></li>
-                      <li><a href="#skills"><i class="bi bi-person navicon"></i> Becerilerim </a></li>
-                      <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Projelerim </a></li>
-                      <li><a href="#contact"><i class="bi bi-envelope navicon"></i> İletişim</a></li>
+                      <li><a href="#hero" ><i class="bi bi-house navicon active"></i> Ana Sayfa </a></li>
+                      <li><a href="#about"><i class="bi bi-person navicon active"></i> Hakkımda </a></li>
+                      <li><a href="#skills"><i class="bi bi-person navicon active"></i> Becerilerim </a></li>
+                      <li><a href="#portfolio"><i class="bi bi-images navicon active"></i> Projelerim </a></li>
+                      <li><a href="#contact"><i class="bi bi-envelope navicon active"></i> İletişim</a></li>
                     </ul>
                   </nav>
-                <div class="social-links text-center">
-                  <a href="https://www.instagram.com/cinar.sude/" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
-                  <a href="https://github.com/sunzcs" class="github" target="_blank"><i class="bi bi-github"></i></a>
-                  <a href="https://www.linkedin.com/in/sudenaz-çınar-8ab4a8280/" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
-                </div>
+                    <div class="social-links text-center">
+                        @{
+                            var instaLink = @Model.Links.FirstOrDefault(l => l.LinkId == 1)?.LinkUrl ?? "#";
+                            var githubLink = @Model.Links.FirstOrDefault(l => l.LinkId == 2)?.LinkUrl ?? "#";
+                            var linkedinLink = @Model.Links.FirstOrDefault(l => l.LinkId == 3)?.LinkUrl ?? "#";
+                        }
+
+                        <a href="@instaLink" class="instagram" target="_blank"><i class="bi bi-instagram"></i></a>
+                        <a href="@linkedinLink" class="linkedin" target="_blank"><i class="bi bi-linkedin"></i></a>
+                        <a href="@githubLink" class="github" target="_blank"><i class="bi bi-github"></i></a>
+                    </div>
               </div>
             </header>
             <!-- ADMİN SAYFASI BUTONU -->
@@ -70,7 +74,11 @@
                         <div class="hero-visual">
                             <div class="profile-container">
                                 <div class="profile-background">
-                                    <img src="@Url.Content("~/img/profile/profile-2.jpg")" alt="Sudenaz Çınar" class="profile-image">
+                                    @{
+                                          var img = Model.Imgs?.FirstOrDefault(i => i.ImageId == 1);
+                                      }
+
+                                      <img src="@img?.ImgUrl" alt="Profile Image" class="img-fluid" style="border-radius: 30px;"/>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +110,11 @@
                     <div class="profile-card">
                       <div class="profile-header">
                         <div class="profile-image">
-                          <img src="~/img/profile/profile-square-3.jpg" alt="Profile Image" class="img-fluid">
+                          @{
+                                var img2 = Model.Imgs?.FirstOrDefault(i => i.ImageId == 2);
+                            }
+
+                            <img src="@img2?.ImgUrl" alt="Profile Image" class="img-fluid" />
                         </div>
                         <div class="profile-badge">
                           <i class="bi bi-check-circle-fill"></i>
@@ -132,20 +144,6 @@
                         <div class="description">
                           <p>@Model.Text?.Text2</p>              
                         </div>
-                        <div class="stats-grid">
-                            <div class="stat-item">
-                              <div class="stat-number">2+</div>
-                              <div class="stat-label">Tamamlanmış Projeler</div>
-                            </div>
-                            <div class="stat-item">
-                              <div class="stat-number">2+</div>
-                              <div class="stat-label">Yıllık Deneyim</div>
-                            </div>
-                            <div class="stat-item">
-                              <div class="stat-number">100%</div>
-                              <div class="stat-label">Müşteri Memnuniyeti</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -154,133 +152,97 @@
 
         <!-- BECERİLERİM SECTİONN -->
 
-        <section id="skills" class="skills section">
-          <div class="container section-title" data-aos="fade-up">
+        <section id="skills" class="skills section" style="padding-top: 120px; margin-top: -80px;">
+
+          <div class="container section-title" data-aos="fade-up" style="margin-top: 80px;">
             <h2>Becerilerim</h2>
           </div>
-          <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="row justify-content-center">
+          <div class="container" data-aos="fade-up" data-aos-delay="100" style="margin-top: 30px;">
+            <<div class="row offset-lg-2 g-4 align-items-stretch">
               <!-- Mesleki Beceriler -->
-              <div class="col-lg-5 offset-lg-1 order-lg-1 mb-4 mb-lg-0">
-                <div class="skills-category p-4" data-aos="fade-up" data-aos-delay="200">
-                  <h3 class="mb-4 fs-4 fw-bold">Mesleki Becerilerim</h3>
-                  <div class="skills-animation">
+           <div class="col-lg-6 d-flex align-items-stretch">
+            <div class="skills-category p-5 w-100" data-aos="fade-up" data-aos-delay="200" style="min-height: 350px;">                    <h3 class="mb-4 fs-4 fw-bold">Mesleki Becerilerim</h3>
+                    <div class="skills-animation">
 
-                    <div class="skill-item mb-4">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0 fs-5">@Model.Skills?.SkillName</h4>
-                      </div>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
-                      </div>
+                        @foreach(var skill in Model.Skills)
+                        {
+                            <div class="skill-item mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="mb-0 fs-5">@skill.SkillName </h4>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        }
+
                     </div>
-
-                    <div class="skill-item mb-4">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0 fs-5">rdfefwsfs</h4>
-                      </div>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
-                      </div>
-                    </div>
-
-                    <div class="skill-item mb-4">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0 fs-5">fwesfwsdf</h4>
-                      </div>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
-                      </div>
-                    </div>
-
-                  </div>
                 </div>
-              </div>
-              <!-- Sosyal Beceriler -->
-              <div class="col-lg-5 order-lg-2">
-                <div class="skills-category p-4" data-aos="fade-up" data-aos-delay="300">
-                  <h3 class="mb-4 fs-4 fw-bold">Hobilerim</h3>
-                  <div class="skills-animation">
-
-                    <div class="skill-item mb-4">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0 fs-5">fdsfds</h4>
-                        
-                      </div>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
-                      </div>
-                    </div>
-                    <div class="skill-item mb-4">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0 fs-5">fsfsdfs</h4>
-                        
-                      </div>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
-                      </div>
-                    </div>
-                    <div class="skill-item mb-4">
-                      <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0 fs-5">sdfsdfsf</h4>
-                      
-                      </div>
-                      <div class="progress" style="height: 8px;">
-                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
+
+              <!-- Sosyal Beceriler  LANG EKLESEM -->
+              <div class="col-lg-6 d-flex align-items-stretch">
+                <div class="skills-category p-5 w-100" data-aos="fade-up" data-aos-delay="300" style="min-height: 350px;">                  <h3 class="mb-4 fs-4 fw-bold">Yabancı Diller</h3>
+                  <div class="skills-animation">
+                        @foreach (var lang in Model.Lang)
+                        {
+                            <div class="skill-item mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="mb-0 fs-5">@lang.LangName</h4>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 100%"></div>
+                                </div>
+                            </div>
+                        }
+                  </div>
+                </div>
+              </div>
+
         </section>
 
 
         <!-- PROJELERİM SECTİON -->
-        <section id="portfolio" class="portfolio section">
-          <div class="container section-title" data-aos="fade-up">
-            <h2>Projelerim</h2>
-            <p>Buradan Projelerime Göz Atabilirsiniz</p>
-          </div>
-          <div class="container" data-aos="fade-up" data-aos-delay="100">
-            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-              <div class="row">
-                <div class="offset-lg-2 col-lg-5 filter-sidebar">
-                  <div class="filters-wrapper" data-aos="fade-right" data-aos-delay="150">
-                    <ul class="portfolio-filters isotope-filters">
-                      <li data-filter=".filter-photography">@Model.Text?.Text3</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="col-lg-5">
-                  <div class="row gy-4 portfolio-container isotope-container" data-aos="fade-up" data-aos-delay="200">
-                    <div class="col-lg-8 order-lg-2 portfolio-item isotope-item filter-photography">
-                      <div class="portfolio-wrap">
-                        <img src="@Url.Content("~/img/portfolio/portfolio-portrait-1.webp")" class="img-fluid" alt="Portfolio Image" loading="lazy">
-                        <div class="portfolio-info">
-                          <div class="content">
-                            <span class="category">Öz Geçmişim</span>
-                            <div class="portfolio-links">
-                              <a href="@Url.Content("~/img/portfolio/portfolio-portrait-1.webp")" class="glightbox" title="Capturing Moments">
-                                <i class="bi bi-plus-lg"></i>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> 
-            </div>
-          </div>
+        <section id="portfolio" class="portfolio section-bg" style="padding-top: 120px; margin-top: -80px;">
 
-        </section>
+  <div class="container section-title custom-bg" data-aos="fade-up">
+    <h2>Projelerim</h2>
+    <p>Buradan Projelerime Göz Atabilirsiniz</p>
+  </div>
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+      <div class="row offset-lg-2 g-4 align-items-stretch">
+        <!-- Sol filtre alanı -->
+        <div class="col-lg-6 filter-sidebar d-flex align-items-stretch">
+          <div class="filters-wrapper shadow p-4 rounded shadow-sm w-100" data-aos="fade-right" data-aos-delay="150" style="min-height: 350px; position: relative;">
+            <span id="skill-arrow" style="position: absolute; bottom: 20px; right: 20px; font-size: 2rem; color: var(--contrast-color); cursor: pointer; z-index: 20;">
+              <i class="bi bi-arrow-right-circle"></i>
+            </span>
+            <div id="arrow-tooltip" style="display:none; position: absolute; bottom: 55px; right: 20px; background: #fff; color: #333; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); padding: 8px 16px; font-size: 0.95rem; z-index: 30;">
+              Ayrıntılı görmek için metinlere tıklayın
+            </div>
+            <ul class="portfolio-filters isotope-filters mb-0">
+              @foreach (var skill in Model.Skills)
+              {
+                <li class="skill-filter" data-id="@skill.SkillsId" style="cursor:pointer; padding: 12px 18px; border-radius: 7px; margin-bottom: 12px; font-size: 1.1rem;">
+                  @skill.SkillName
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-6 d-flex align-items-stretch">
+          <div id="skill-text-box" style="background-color: var(--accent-color); color: var(--contrast-color); padding: 4rem; border-radius: 1rem; width: 100%; min-height: 350px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <p id="skill-text" style="margin:0; font-size: 1.15rem;"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
             <!-- iLETİŞİM SECTİON -->
-          
         <section id="contact" class="contact section">
           <div class="container section-title" data-aos="fade-up">
             <h2>İletişim Bilgilerim</h2>
@@ -362,19 +324,60 @@
             <div class="credits">Designed by <a href="#">Süde</a></div>
           </div>
         </footer>
-
+        
+        <!-- SCRİPTLER -->
         
           <!-- LOGİN SCRİPTİ -->
         <script>
           document.addEventListener("DOMContentLoaded", function () {
             var btn = document.getElementById("goToLoginBtn");
             btn.addEventListener("click", function () {
-              window.location.href = '@Url.Action("Login", "Login")';
+              window.location.href = '@Url.Action("Index", "Login")';
             });
           });
         </script>
 
-        <!-- SCRİPTLER -->
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            const filters = document.querySelectorAll(".skill-filter");
+            const skillText = document.getElementById("skill-text");
+            const skillArrow = document.getElementById("skill-arrow");
+            const arrowTooltip = document.getElementById("arrow-tooltip");
+            const skillTexts = {
+              "1": "C ve C# dillerinde, temel algoritma mantığını pekiştirmek amacıyla Not Ortalaması Hesaplayıcı, Sayı Tahmin Oyunu ve Basit Hesap Makinesi gibi kullanıcı etkileşimli küçük projeler geliştirdim. Bu uygulamalar, basit matematik işlemleri ve koşul yapıları kullanılarak tasarlanmıştır.",
+              "2": "Java ile konsol tabanlı, kullanıcı etkileşimli bir canavar dövüş oyunu geliştirdim. Oyuncu, rastgele karşısına çıkan canavarlarla savaşarak puan kazanmakta ve karakterin can durumu dinamik olarak güncellenmektedir. Temel oyun döngüsü, karar yapıları ve nesne yönelimli programlama prensipleri kullanılarak tasarlanmıştır.",
+              "3": "Bu projede kişisel bir web sitesi geliştirdim. HTML, CSS, JavaScript ve ASP.NET Core MVC teknolojilerini kullandım. Sitede hakkımda, becerilerim, projelerim ve iletişim gibi bölümler yer alıyor. Admin paneli üzerinden içerikleri düzenleyebiliyorum. Dinamik yapısıyla mobil uyumlu, sade ve kullanışlı bir tasarım oluşturdum."
+            };
+
+            // Tooltip göster/gizle
+            skillArrow.addEventListener("mouseenter", function() {
+              arrowTooltip.style.display = "block";
+            });
+            skillArrow.addEventListener("mouseleave", function() {
+              arrowTooltip.style.display = "none";
+            });
+
+            // İlk açılışta ilk skill'in metni gösterilsin
+            if (filters.length > 0) {
+              const firstId = filters[0].getAttribute("data-id");
+              skillText.textContent = skillTexts[firstId] || "Bu beceri için bilgi eklenmemiş.";
+              filters.forEach(f => f.classList.remove("filter-active"));
+              filters[0].classList.add("filter-active");
+            }
+
+            filters.forEach(filter => {
+              filter.addEventListener("click", () => {
+                const skillId = filter.getAttribute("data-id");
+                let text = skillTexts[skillId] || "Bu beceri için bilgi eklenmemiş.";
+                skillText.textContent = text;
+                filters.forEach(f => f.classList.remove("filter-active"));
+                filter.classList.add("filter-active");
+              });
+            });
+          });
+        </script>
+
+        
 
           <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
           <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -389,6 +392,7 @@
           <script src="@Url.Content("~/vendor/glightbox/js/glightbox.min.js")"></script>
           <script src="@Url.Content("~/vendor/swiper/swiper-bundle.min.js")"></script>
             @await RenderSectionAsync("Scripts", required: false)
+            
             <script>
               var form = document.getElementById("my-form");
               async function handleSubmit(event) {

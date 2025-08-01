@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using myblog.Data;
 
@@ -11,9 +12,11 @@ using myblog.Data;
 namespace myblog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250725084254_LoginViewModel")]
+    partial class LoginViewModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +47,7 @@ namespace myblog.Migrations
 
                     b.HasKey("EducationId");
 
-                    b.ToTable("Education", (string)null);
+                    b.ToTable("Education");
                 });
 
             modelBuilder.Entity("myblog.Models.Img", b =>
@@ -60,7 +63,7 @@ namespace myblog.Migrations
 
                     b.HasKey("ImageId");
 
-                    b.ToTable("Imgs", (string)null);
+                    b.ToTable("Imgs");
                 });
 
             modelBuilder.Entity("myblog.Models.Lang", b =>
@@ -79,7 +82,7 @@ namespace myblog.Migrations
 
                     b.HasKey("LangId");
 
-                    b.ToTable("Lang", (string)null);
+                    b.ToTable("Lang");
                 });
 
             modelBuilder.Entity("myblog.Models.Link", b =>
@@ -95,7 +98,7 @@ namespace myblog.Migrations
 
                     b.HasKey("LinkId");
 
-                    b.ToTable("Links", (string)null);
+                    b.ToTable("Links");
                 });
 
             modelBuilder.Entity("myblog.Models.Me", b =>
@@ -126,7 +129,7 @@ namespace myblog.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Me", (string)null);
+                    b.ToTable("Me");
                 });
 
             modelBuilder.Entity("myblog.Models.SLang", b =>
@@ -145,7 +148,7 @@ namespace myblog.Migrations
 
                     b.HasKey("SlangId");
 
-                    b.ToTable("SLang", (string)null);
+                    b.ToTable("SLang");
                 });
 
             modelBuilder.Entity("myblog.Models.Skills", b =>
@@ -161,7 +164,7 @@ namespace myblog.Migrations
 
                     b.HasKey("SkillsId");
 
-                    b.ToTable("Skills", (string)null);
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("myblog.Models.Text", b =>
@@ -183,7 +186,7 @@ namespace myblog.Migrations
 
                     b.HasKey("TextId");
 
-                    b.ToTable("Text", (string)null);
+                    b.ToTable("Text");
                 });
 #pragma warning restore 612, 618
         }

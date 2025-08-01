@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using myblog.Models; // Model klasörünüzün namespace'i
 
 namespace myblog.Data
@@ -12,7 +13,8 @@ namespace myblog.Data
         public DbSet<Lang> Lang { get; set; }
         public DbSet<Skills> Skills { get; set; }
         public DbSet<Text> Text { get; set; }
-
+        public DbSet<Img> Imgs { get; set; }
+        public DbSet<Link> Links { get; set; }
 
 
 

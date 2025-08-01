@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,12 +5,13 @@ namespace myblog.Controllers
 {
     public class AccountController : Controller
     {
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            return RedirectToAction("Login", "Admin");
-
+            HttpContext.Session.Clear();
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+            return RedirectToAction("Index", "Login");
         }
     }
 }

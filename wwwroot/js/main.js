@@ -1692,7 +1692,33 @@
   } catch (error) {
     console.log(error);
   }
+})(jQuery);
 
+(function ($) {
+    "use strict";
 
+    var menu = $('.js-item-menu');
+    var sub_menu_is_showed = -1;
+
+    menu.on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation(); // Sayfa dışına yayılmasını engeller
+
+        var isSame = menu.index(this) === sub_menu_is_showed;
+
+        menu.removeClass('show-dropdown');
+
+        if (!isSame) {
+            $(this).addClass('show-dropdown');
+            sub_menu_is_showed = menu.index(this);
+        } else {
+            sub_menu_is_showed = -1;
+        }
+    });
+
+    $(document).on('click', function () {
+        menu.removeClass('show-dropdown');
+        sub_menu_is_showed = -1;
+    });
 
 })(jQuery);

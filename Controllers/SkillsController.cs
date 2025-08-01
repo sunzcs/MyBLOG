@@ -46,23 +46,36 @@ namespace myblog.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] Skills newSkill)
+        {
+            if (string.IsNullOrWhiteSpace(newSkill.SkillName))
             {
-                if (string.IsNullOrWhiteSpace(newSkill.SkillName))
-                {
-                    return Json(new { success = false, message = "Yetenek boş olamaz." });
-                }
-
-                try
-                {
-                    _context.Skills.Add(newSkill);
-                    await _context.SaveChangesAsync();
-                    return Json(new { success = true });
-                }
-                catch (Exception ex)
-                {
-                    return Json(new { success = false, message = ex.Message });
-                }
+                return Json(new { success = false, message = "Yetenek boş olamaz." });
             }
 
+            try
+            {
+                _context.Skills.Add(newSkill);
+                await _context.SaveChangesAsync();
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            var skills = _context.Skills.Find(id);
+            if (skills == null)
+            {
+                return Json(new { success = false, message = "Kayıt bulunamadı." });
+            }
+
+            _context.Skills.Remove(skills);
+            _context.SaveChanges();
+            return Json(new { success = true });
+        }
     }
 }
