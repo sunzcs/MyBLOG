@@ -9,7 +9,6 @@ namespace myblog.Data
         
         public DbSet<Me> Me { get; set; }
         public DbSet<Education> Education { get; set; }
-        public DbSet<SLang> SLang { get; set; }
         public DbSet<Lang> Lang { get; set; }
         public DbSet<Skills> Skills { get; set; }
         public DbSet<Text> Text { get; set; }
